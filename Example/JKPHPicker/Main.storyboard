@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="JKPHPicker_Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QZi-KB-Hj8">
+                                <rect key="frame" x="87" y="383.5" width="240" height="129"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BF9-vo-rJS">
+                                <rect key="frame" x="51" y="319" width="41.5" height="20.5"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="7S6-7v-KYR">
+                                <rect key="frame" x="57" y="111" width="300" height="150"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" spacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="EzL-nu-avB">
+                                        <rect key="frame" x="0.0" y="17" width="150" height="116"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bcc-d4-u4Q">
+                                                <rect key="frame" x="0.0" y="0.0" width="80" height="30"/>
+                                                <state key="normal" title="JKPHPicker"/>
+                                                <connections>
+                                                    <action selector="customJKPHPicker:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vEV-15-ePg"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jqb-ua-s83">
+                                                <rect key="frame" x="0.0" y="43" width="63" height="30"/>
+                                                <state key="normal" title="PHPicker"/>
+                                                <connections>
+                                                    <action selector="systemPHPicker:" destination="BYZ-38-t0r" eventType="touchUpInside" id="uyZ-ZK-uUc"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bKj-ie-Fkx">
+                                                <rect key="frame" x="0.0" y="86" width="99" height="30"/>
+                                                <state key="normal" title="UIIMagePicker"/>
+                                                <connections>
+                                                    <action selector="systemUIIMagePicker:" destination="BYZ-38-t0r" eventType="touchUpInside" id="XW7-TN-d7C"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UmG-Ya-Jnx">
+                                        <rect key="frame" x="150" y="0.0" width="150" height="150"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="e1N-1p-oa4">
+                                                <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+                                            </imageView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="e1N-1p-oa4" secondAttribute="bottom" id="OAn-EX-TfD"/>
+                                            <constraint firstAttribute="width" constant="150" id="Psk-Qb-ujb"/>
+                                            <constraint firstAttribute="trailing" secondItem="e1N-1p-oa4" secondAttribute="trailing" id="fSX-pe-Xsi"/>
+                                            <constraint firstItem="e1N-1p-oa4" firstAttribute="top" secondItem="UmG-Ya-Jnx" secondAttribute="top" id="pPk-yW-WqG"/>
+                                            <constraint firstAttribute="height" constant="150" id="yW4-Ag-070"/>
+                                            <constraint firstItem="e1N-1p-oa4" firstAttribute="leading" secondItem="UmG-Ya-Jnx" secondAttribute="leading" id="zc3-ET-Ubj"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <connections>
+                        <outlet property="hStackView" destination="7S6-7v-KYR" id="7H4-Ww-yNl"/>
+                        <outlet property="imageView" destination="QZi-KB-Hj8" id="qKK-Xo-XU8"/>
+                        <outlet property="selectedImageView" destination="e1N-1p-oa4" id="464-WT-Mkt"/>
+                        <outlet property="tipLabel" destination="BF9-vo-rJS" id="FOV-vA-hGy"/>
+                        <outlet property="vStackView" destination="EzL-nu-avB" id="1IS-Iv-GvZ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="69.565217391304358" y="110.49107142857143"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

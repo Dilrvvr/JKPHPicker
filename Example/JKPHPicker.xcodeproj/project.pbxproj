@@ -7,14 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2075DFB2884B839DE78DDD18 /* Pods_JKPHPicker_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCEBFFD2D73A76D542754994 /* Pods_JKPHPicker_Example.framework */; };
+		3962FA36456E01771BF4B723 /* Pods_JKPHPicker_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5F671B25874B740F2BE1475 /* Pods_JKPHPicker_Example.framework */; };
+		446EE7EE6B4FA80845ADC85F /* Pods_JKPHPicker_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7743A3FA07D2835AC20C84F7 /* Pods_JKPHPicker_Tests.framework */; };
+		500D1414285DD5840091CC4A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 500D1413285DD5840091CC4A /* Main.storyboard */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
-		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
-		6AB5F7F8935CADD048C1504D /* Pods_JKPHPicker_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E09A7DAA917C067E2FFA5934 /* Pods_JKPHPicker_Tests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,25 +28,25 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		037C4C52AEBFB3941F2D6A49 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
-		0E4A0DAB5BBBC41124C9D6F3 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
-		1C12982EBAF7002B640AE9BA /* Pods-JKPHPicker_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JKPHPicker_Tests.release.xcconfig"; path = "Target Support Files/Pods-JKPHPicker_Tests/Pods-JKPHPicker_Tests.release.xcconfig"; sourceTree = "<group>"; };
-		27CEE3834AD085A13BD95EA1 /* JKPHPicker.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = JKPHPicker.podspec; path = ../JKPHPicker.podspec; sourceTree = "<group>"; };
-		556156CA7D2266E42F159506 /* Pods-JKPHPicker_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JKPHPicker_Tests.debug.xcconfig"; path = "Target Support Files/Pods-JKPHPicker_Tests/Pods-JKPHPicker_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		4FCAB251C9257F0AA38128AF /* Pods-JKPHPicker_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JKPHPicker_Tests.debug.xcconfig"; path = "Target Support Files/Pods-JKPHPicker_Tests/Pods-JKPHPicker_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		500D1413285DD5840091CC4A /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* JKPHPicker_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JKPHPicker_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		607FACD71AFB9204008FA782 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		607FACDA1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		607FACDC1AFB9204008FA782 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		607FACE51AFB9204008FA782 /* JKPHPicker_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JKPHPicker_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
-		9A57C2F6987FA4C4577B90C2 /* Pods-JKPHPicker_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JKPHPicker_Example.release.xcconfig"; path = "Target Support Files/Pods-JKPHPicker_Example/Pods-JKPHPicker_Example.release.xcconfig"; sourceTree = "<group>"; };
-		BCEBFFD2D73A76D542754994 /* Pods_JKPHPicker_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JKPHPicker_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C044CD4BEC6AF2112897F1ED /* Pods-JKPHPicker_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JKPHPicker_Example.debug.xcconfig"; path = "Target Support Files/Pods-JKPHPicker_Example/Pods-JKPHPicker_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		E09A7DAA917C067E2FFA5934 /* Pods_JKPHPicker_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JKPHPicker_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6111739A975D3FF55D30B54E /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		7743A3FA07D2835AC20C84F7 /* Pods_JKPHPicker_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JKPHPicker_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		96C78F67A85470C6F7FB86FE /* Pods-JKPHPicker_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JKPHPicker_Example.debug.xcconfig"; path = "Target Support Files/Pods-JKPHPicker_Example/Pods-JKPHPicker_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		9B6F1BEA96216B4B0231666D /* Pods-JKPHPicker_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JKPHPicker_Tests.release.xcconfig"; path = "Target Support Files/Pods-JKPHPicker_Tests/Pods-JKPHPicker_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		BA18C1E165936F60285FB7A4 /* JKPHPicker.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = JKPHPicker.podspec; path = ../JKPHPicker.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		BDA3FC3C8592BB95F2B19223 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		CDDE5127DEDE586A709DA538 /* Pods-JKPHPicker_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JKPHPicker_Example.release.xcconfig"; path = "Target Support Files/Pods-JKPHPicker_Example/Pods-JKPHPicker_Example.release.xcconfig"; sourceTree = "<group>"; };
+		F5F671B25874B740F2BE1475 /* Pods_JKPHPicker_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JKPHPicker_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,7 +54,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2075DFB2884B839DE78DDD18 /* Pods_JKPHPicker_Example.framework in Frameworks */,
+				3962FA36456E01771BF4B723 /* Pods_JKPHPicker_Example.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -62,7 +62,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6AB5F7F8935CADD048C1504D /* Pods_JKPHPicker_Tests.framework in Frameworks */,
+				446EE7EE6B4FA80845ADC85F /* Pods_JKPHPicker_Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,8 +76,8 @@
 				607FACD21AFB9204008FA782 /* Example for JKPHPicker */,
 				607FACE81AFB9204008FA782 /* Tests */,
 				607FACD11AFB9204008FA782 /* Products */,
-				6F4DF3F47639BC5DF73D0AB0 /* Pods */,
-				A37FA38EC11D7876648A7884 /* Frameworks */,
+				E39B01704BB4B3C2F328D0AE /* Pods */,
+				F0604D03AD0F851002CDB48B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -95,7 +95,7 @@
 			children = (
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
-				607FACD91AFB9204008FA782 /* Main.storyboard */,
+				500D1413285DD5840091CC4A /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
@@ -132,30 +132,29 @@
 		607FACF51AFB993E008FA782 /* Podspec Metadata */ = {
 			isa = PBXGroup;
 			children = (
-				27CEE3834AD085A13BD95EA1 /* JKPHPicker.podspec */,
-				037C4C52AEBFB3941F2D6A49 /* README.md */,
-				0E4A0DAB5BBBC41124C9D6F3 /* LICENSE */,
+				BA18C1E165936F60285FB7A4 /* JKPHPicker.podspec */,
+				BDA3FC3C8592BB95F2B19223 /* README.md */,
+				6111739A975D3FF55D30B54E /* LICENSE */,
 			);
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
 		};
-		6F4DF3F47639BC5DF73D0AB0 /* Pods */ = {
+		E39B01704BB4B3C2F328D0AE /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				C044CD4BEC6AF2112897F1ED /* Pods-JKPHPicker_Example.debug.xcconfig */,
-				9A57C2F6987FA4C4577B90C2 /* Pods-JKPHPicker_Example.release.xcconfig */,
-				556156CA7D2266E42F159506 /* Pods-JKPHPicker_Tests.debug.xcconfig */,
-				1C12982EBAF7002B640AE9BA /* Pods-JKPHPicker_Tests.release.xcconfig */,
+				96C78F67A85470C6F7FB86FE /* Pods-JKPHPicker_Example.debug.xcconfig */,
+				CDDE5127DEDE586A709DA538 /* Pods-JKPHPicker_Example.release.xcconfig */,
+				4FCAB251C9257F0AA38128AF /* Pods-JKPHPicker_Tests.debug.xcconfig */,
+				9B6F1BEA96216B4B0231666D /* Pods-JKPHPicker_Tests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		A37FA38EC11D7876648A7884 /* Frameworks */ = {
+		F0604D03AD0F851002CDB48B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				BCEBFFD2D73A76D542754994 /* Pods_JKPHPicker_Example.framework */,
-				E09A7DAA917C067E2FFA5934 /* Pods_JKPHPicker_Tests.framework */,
+				F5F671B25874B740F2BE1475 /* Pods_JKPHPicker_Example.framework */,
+				7743A3FA07D2835AC20C84F7 /* Pods_JKPHPicker_Tests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -167,11 +166,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "JKPHPicker_Example" */;
 			buildPhases = (
-				F8120704497D427A2175A8FA /* [CP] Check Pods Manifest.lock */,
+				895499FCAB963B39A2B057A5 /* [CP] Check Pods Manifest.lock */,
 				607FACCC1AFB9204008FA782 /* Sources */,
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
-				33E8C4CB803B7F4EB02A7C9A /* [CP] Embed Pods Frameworks */,
+				E29E80ADE8D1FD0691368613 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -186,11 +185,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "JKPHPicker_Tests" */;
 			buildPhases = (
-				0BBBA297219F960C43652A0E /* [CP] Check Pods Manifest.lock */,
+				E22D2078204C856C127411B0 /* [CP] Check Pods Manifest.lock */,
 				607FACE11AFB9204008FA782 /* Sources */,
 				607FACE21AFB9204008FA782 /* Frameworks */,
 				607FACE31AFB9204008FA782 /* Resources */,
-				B257E628F4D3A28CA6786A61 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -214,6 +212,7 @@
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = BA4DMKLYJJ;
 						LastSwiftMigration = 0900;
 					};
 					607FACE41AFB9204008FA782 = {
@@ -228,6 +227,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -247,7 +247,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
+				500D1414285DD5840091CC4A /* Main.storyboard in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
 			);
@@ -263,7 +263,29 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0BBBA297219F960C43652A0E /* [CP] Check Pods Manifest.lock */ = {
+		895499FCAB963B39A2B057A5 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-JKPHPicker_Example-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E22D2078204C856C127411B0 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -285,7 +307,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		33E8C4CB803B7F4EB02A7C9A /* [CP] Embed Pods Frameworks */ = {
+		E29E80ADE8D1FD0691368613 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -293,54 +315,16 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-JKPHPicker_Example/Pods-JKPHPicker_Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/JKPHPicker/JKPHPicker.framework",
+				"${BUILT_PRODUCTS_DIR}/JKSwiftLibrary/JKSwiftLibrary.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JKPHPicker.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JKSwiftLibrary.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-JKPHPicker_Example/Pods-JKPHPicker_Example-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		B257E628F4D3A28CA6786A61 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-JKPHPicker_Tests/Pods-JKPHPicker_Tests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/FBSnapshotTestCase/FBSnapshotTestCase.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSnapshotTestCase.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-JKPHPicker_Tests/Pods-JKPHPicker_Tests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F8120704497D427A2175A8FA /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-JKPHPicker_Example-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -374,14 +358,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		607FACD91AFB9204008FA782 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				607FACDA1AFB9204008FA782 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		607FACDE1AFB9204008FA782 /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -438,7 +414,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -484,7 +460,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -494,37 +470,41 @@
 		};
 		607FACF01AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C044CD4BEC6AF2112897F1ED /* Pods-JKPHPicker_Example.debug.xcconfig */;
+			baseConfigurationReference = 96C78F67A85470C6F7FB86FE /* Pods-JKPHPicker_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = BA4DMKLYJJ;
 				INFOPLIST_FILE = JKPHPicker/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
 		607FACF11AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9A57C2F6987FA4C4577B90C2 /* Pods-JKPHPicker_Example.release.xcconfig */;
+			baseConfigurationReference = CDDE5127DEDE586A709DA538 /* Pods-JKPHPicker_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = BA4DMKLYJJ;
 				INFOPLIST_FILE = JKPHPicker/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
 		607FACF31AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 556156CA7D2266E42F159506 /* Pods-JKPHPicker_Tests.debug.xcconfig */;
+			baseConfigurationReference = 4FCAB251C9257F0AA38128AF /* Pods-JKPHPicker_Tests.debug.xcconfig */;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
@@ -546,7 +526,7 @@
 		};
 		607FACF41AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1C12982EBAF7002B640AE9BA /* Pods-JKPHPicker_Tests.release.xcconfig */;
+			baseConfigurationReference = 9B6F1BEA96216B4B0231666D /* Pods-JKPHPicker_Tests.release.xcconfig */;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
