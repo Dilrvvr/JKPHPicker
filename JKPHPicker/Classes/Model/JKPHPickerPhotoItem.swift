@@ -51,6 +51,9 @@ open class JKPHPickerPhotoItem: NSObject {
     // MARK:
     // MARK: - Public Property
     
+    /// 浏览时加载失败的错误信息
+    open var browserErrorMessage: String?
+    
     /// 仅选中的有值
     open private(set) var thumbnailImage: UIImage?
     

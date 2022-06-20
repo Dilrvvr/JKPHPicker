@@ -11,10 +11,10 @@ import Photos
 open class JKPHPickerBaseCollectionViewCell: UICollectionViewCell {
     
     /// 选中图标的宽高
-    public static let selectIconWH: CGFloat = 20.0
+    public static let selectIconWH: CGFloat = 24.0
     
     /// 选中按钮的宽高
-    public static let selectButtonWH: CGFloat = 40.0
+    public static let selectButtonSize: CGSize = CGSize(width: 44.0, height: 44.0)
     
     // MARK:
     // MARK: - Public Property

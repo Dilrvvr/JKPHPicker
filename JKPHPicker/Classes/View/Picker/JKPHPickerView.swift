@@ -633,7 +633,25 @@ open class JKPHPickerView: JKPHPickerBaseView {
     /// limitJumpButtonClick
     @objc private func limitJumpButtonClick(button: UIButton) {
         
+        isTapLimitedItem = true
+        
+        if !configuration.isObservePhotoLibraryChange {
+            
+            NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive(note:)), name: UIApplication.didBecomeActiveNotification, object: nil)
+        }
+        
         JKAPPUtility.jumpToAppSetting()
+    }
+    
+    @objc private func applicationDidBecomeActive(note: Notification) {
+        
+        NotificationCenter.default.removeObserver(self, name: UIApplication.didBecomeActiveNotification, object: nil)
+        
+        isTapLimitedItem = false
+        
+        if configuration.isObservePhotoLibraryChange { return }
+        
+        sendRequest()
     }
     
     // MARK:
@@ -674,13 +692,26 @@ open class JKPHPickerView: JKPHPickerBaseView {
     
     private func solvePhotoLibraryAuthorization(status: JKAuthorizationStatus) {
         
+        limitTipView.isHidden = (status != .limited)
+        
         guard ((status == .authorized) ||
                (status == .limited)) else {
             
             return
         }
         
-        guard configuration.isObservePhotoLibraryChange else { return }
+        guard configuration.isObservePhotoLibraryChange else {
+            
+            if #available(iOS 15, *) {
+                
+                guard status == .limited else { return }
+                
+                // 未监听相册变化的情况下也可以由iOS15的新API刷新可访问照片的变化
+                addLimitedModel()
+            }
+            
+            return
+        }
         
         if isPhotoLibraryObserverAdded { return }
         
@@ -692,7 +723,13 @@ open class JKPHPickerView: JKPHPickerBaseView {
             
             guard status == .limited else { return }
             
-            limitTipView.isHidden = false
+            addLimitedModel()
+        }
+    }
+    
+    private func addLimitedModel() {
+        
+        if #available(iOS 14, *) {
             
             let limitedModel = JKPHPickerActionModel()
             limitedModel.reuseID = String(describing: JKPHPickerAddMoreCell.self)
@@ -706,7 +743,24 @@ open class JKPHPickerView: JKPHPickerBaseView {
                     return
                 }
                 
-                PHPhotoLibrary.shared().presentLimitedLibraryPicker(from: vc)
+                if #available(iOS 15, *) {
+                    
+                    PHPhotoLibrary.shared().presentLimitedLibraryPicker(from: vc) { _ in
+                        
+                        guard let _ = self else { return }
+                        
+                        if self!.configuration.isObservePhotoLibraryChange {
+                            
+                            return
+                        }
+                        
+                        self?.sendRequest()
+                    }
+                    
+                } else {
+                    
+                    PHPhotoLibrary.shared().presentLimitedLibraryPicker(from: vc)
+                }
             }
             
             extraActionModelArray.insert(limitedModel, at: 0)
@@ -762,6 +816,8 @@ open class JKPHPickerView: JKPHPickerBaseView {
     
     // MARK:
     // MARK: - Private Property
+    
+    private lazy var isTapLimitedItem = false
     
     private lazy var photoItemDataArray = [JKPHPickerPhotoItem]()
     
@@ -936,8 +992,8 @@ open class JKPHPickerView: JKPHPickerBaseView {
         
         let limitTipView = JKPHPickerBarView(frame: CGRect(x: 0.0, y: 0.0, width: self.bounds.width, height: 44.0))
         
-        limitTipView.backgroundEffectView.effect = UIBlurEffect(style: .dark)
         limitTipView.isHidden = true
+        limitTipView.backgroundEffectView.effect = UIBlurEffect(style: .dark)
         
         return limitTipView
     }()

@@ -59,6 +59,8 @@ open class JKPHPickerBrowserCell: JKPHPickerBaseCollectionViewCell {
         
         willSet {
             
+            errorLabel.isHidden = true
+            
             previousImageViewSize = .zero
             
             if let item = model,
@@ -191,6 +193,8 @@ open class JKPHPickerBrowserCell: JKPHPickerBaseCollectionViewCell {
         super.layoutSubviews()
         
         updateLayout()
+        
+        errorLabel.frame = CGRect(x: 15.0, y: 0.0, width: imageContainerView.bounds.width - 30.0, height: imageContainerView.bounds.height)
     }
     
     private func updateLayout() {
@@ -342,13 +346,18 @@ open class JKPHPickerBrowserCell: JKPHPickerBaseCollectionViewCell {
     /// 加载图片
     private func requestImage(photoItem: JKPHPickerPhotoItem) {
         
+        errorLabel.isHidden = true
+        
         imageView.setPhotoPickerImage(with: photoItem, configuration: configuration, imageCache: previewImageCache, requestType: .preview) { [weak self] photoItem, image, info, error in
             
             guard let _ = self else { return }
             
-            if let _ = error {
+            if let error = error {
                 
-                JKPHPickerToastView.show(in: self, message: error!.localizedDescription)
+                self?.errorLabel.text = error.localizedDescription
+                self?.errorLabel.isHidden = false
+                
+                //JKPHPickerToastView.show(in: self, message: error.localizedDescription)
             }
             
             if let _ = image,
@@ -363,6 +372,18 @@ open class JKPHPickerBrowserCell: JKPHPickerBaseCollectionViewCell {
             }
         }
     }
+    
+    private lazy var errorLabel: UILabel = {
+        
+        let label = UILabel()
+        
+        label.font = UIFont.systemFont(ofSize: 15.0)
+        label.textColor = .white
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        
+        return label
+    }()
     
     /// 加载gif
     private func requestGif(photoItem: JKPHPickerPhotoItem) {
@@ -819,6 +840,7 @@ open class JKPHPickerBrowserCell: JKPHPickerBaseCollectionViewCell {
         imageContainerView.addSubview(imageView)
         imageContainerView.addSubview(livePhotoView)
         imageContainerView.addSubview(gifPlayView)
+        imageContainerView.addSubview(errorLabel)
     }
     
     /// 布局UI 交给子类重写 super自动调用该方法

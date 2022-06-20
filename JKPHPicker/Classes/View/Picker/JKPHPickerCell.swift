@@ -143,7 +143,7 @@ open class JKPHPickerCell: JKPHPickerBaseCollectionViewCell {
         
         selectIconImageView.frame = CGRect(x: contentView.bounds.width - Self.selectIconWH - Self.layoutEdgeInset, y: contentView.bounds.height - Self.selectIconWH - Self.layoutEdgeInset, width: Self.selectIconWH, height: Self.selectIconWH)
         
-        selectButton.frame = CGRect(x: contentView.bounds.width - Self.selectButtonWH, y: contentView.bounds.height - Self.selectButtonWH, width: Self.selectButtonWH, height: Self.selectButtonWH)
+        selectButton.frame = CGRect(x: contentView.bounds.width - Self.selectButtonSize.width, y: contentView.bounds.height - Self.selectButtonSize.height, width: Self.selectButtonSize.width, height: Self.selectButtonSize.height)
         
         let favoriteImageWH: CGFloat = 18.0
         favoriteImageView.frame = CGRect(x: Self.layoutEdgeInset, y: selectIconImageView.frame.minY + (selectIconImageView.frame.height - favoriteImageWH) * 0.5, width: favoriteImageWH, height: favoriteImageWH)
@@ -161,7 +161,7 @@ open class JKPHPickerCell: JKPHPickerBaseCollectionViewCell {
         iCloudButton.frame = CGRect(x: Self.layoutEdgeInset, y: Self.layoutEdgeInset, width: 16.3, height: 15.67)
         
         let mediaTypeWidth = mediaTypeButton.isHidden ? 1.0 : mediaTypeButton.sizeThatFits(CGSize(width: CGFloat.infinity, height: CGFloat.infinity)).width + 3.0
-        let mediaTypeHeight = mediaTypeFont.lineHeight + Self.layoutEdgeInset * 1.5
+        let mediaTypeHeight = max(mediaTypeFont.lineHeight + Self.layoutEdgeInset * 1.5, Self.selectIconWH)
         let mediaTypeX = (iCloudButton.isHidden ? Self.layoutEdgeInset : (iCloudButton.frame.maxX + Self.layoutEdgeInset))
         let mediaTypeY = (iCloudButton.isHidden ? Self.layoutEdgeInset : (Self.layoutEdgeInset * 2.0 + iCloudButton.frame.height - mediaTypeHeight) * 0.5)
         mediaTypeButton.frame = CGRect(x: mediaTypeX, y: mediaTypeY, width: mediaTypeWidth, height: mediaTypeHeight)
