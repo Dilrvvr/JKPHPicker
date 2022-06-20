@@ -592,7 +592,7 @@ open class JKPHPickerBrowserView: JKPHPickerBaseView {
                     navigationBarView.rightButton.setTitle("\(currentIndex + 1)/\(itemCount)", for: .normal)
                 }
                 
-                if configuration.showsOriginalImageButton {
+                if configuration.isShowsOriginalButton {
                     
                     originalImageButton.isHidden = !item.isSelectable
                 }

@@ -1,5 +1,5 @@
 //
-//  JKPHPickerTakePictureCell.swift
+//  JKPHPickerCameraCell.swift
 //  JKSwiftPhotoPicker
 //
 //  Created by AlbertCC on 2022/1/20.
@@ -8,7 +8,7 @@
 import UIKit
 import JKSwiftLibrary
 
-open class JKPHPickerTakePictureCell: UICollectionViewCell {
+open class JKPHPickerCameraCell: UICollectionViewCell {
     
     // MARK:
     // MARK: - Public Property

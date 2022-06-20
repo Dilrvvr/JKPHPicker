@@ -294,7 +294,7 @@ open class JKPHPickerBaseView: JKPHPickerUIView {
     open override func initializeUIData() {
         super.initializeUIData()
         
-        originalImageButton.isHidden = !configuration.showsOriginalImageButton
+        originalImageButton.isHidden = !configuration.isShowsOriginalButton
     }
     
     // MARK:

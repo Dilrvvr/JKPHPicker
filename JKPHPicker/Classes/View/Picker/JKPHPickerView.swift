@@ -651,66 +651,69 @@ open class JKPHPickerView: JKPHPickerBaseView {
         
         extraActionModelArray.removeAll()
         
-        // TODO: - JKTODO <#注释#>
-        let takePictureModel = JKPHPickerActionModel()
-        takePictureModel.reuseID = String(describing: JKPHPickerTakePictureCell.self)
-        takePictureModel.actionHandler = { model in
+        if configuration.isShowCameraItem {
             
-            // TODO: - JKTODO <#注释#>
+            let cameraModel = JKPHPickerActionModel()
+            cameraModel.reuseID = String(describing: JKPHPickerCameraCell.self)
+            
+            cameraModel.actionHandler = { model in
+                
+                // TODO: - JKTODO <#注释#>
+            }
+            
+            extraActionModelArray.append(cameraModel)
         }
-        extraActionModelArray.append(takePictureModel)
         
         JKAuthorization.checkPhotoLibraryAuthorization { [weak self] isNotDeterminedAtFirst, status in
             
-            guard let weakSelf = self else { return }
+            guard let _ = self else { return }
             
-            guard weakSelf.configuration.isObservePhotoLibraryChange else {
-                
-                return
-            }
+            self?.solvePhotoLibraryAuthorization(status: status)
+        }
+    }
+    
+    private func solvePhotoLibraryAuthorization(status: JKAuthorizationStatus) {
+        
+        guard ((status == .authorized) ||
+               (status == .limited)) else {
             
-            switch status {
+            return
+        }
+        
+        guard configuration.isObservePhotoLibraryChange else { return }
+        
+        if isPhotoLibraryObserverAdded { return }
+        
+        isPhotoLibraryObserverAdded = true
+        
+        PHPhotoLibrary.shared().register(self)
+        
+        if #available(iOS 14, *) {
+            
+            guard status == .limited else { return }
+            
+            limitTipView.isHidden = false
+            
+            let limitedModel = JKPHPickerActionModel()
+            limitedModel.reuseID = String(describing: JKPHPickerAddMoreCell.self)
+            
+            limitedModel.actionHandler = { [weak self] model in
                 
-            case .authorized, .limited:
-                
-                if weakSelf.isPhotoLibraryObserverAdded { return }
-                
-                weakSelf.isPhotoLibraryObserverAdded = true
-                
-                PHPhotoLibrary.shared().register(weakSelf)
-                
-                if #available(iOS 14, *) {
+                guard let _ = self,
+                      let _ = self?.delegate,
+                      let vc = self?.delegate?.pickerViewInViewController(self!) else {
                     
-                    guard status == .limited else { return }
-                    
-                    self?.limitTipView.isHidden = false
-                    
-                    let limitedModel = JKPHPickerActionModel()
-                    limitedModel.reuseID = String(describing: JKPHPickerAddMoreCell.self)
-                    limitedModel.actionHandler = { model in
-                        
-                        guard let _ = self,
-                              let _ = self?.delegate,
-                              let vc = self?.delegate?.pickerViewInViewController(self!) else {
-                                  
-                                  return
-                              }
-                        
-                        // TODO: - JKTODO <#注释#>
-                        PHPhotoLibrary.shared().presentLimitedLibraryPicker(from: vc)
-                        
-                    }
-                    weakSelf.extraActionModelArray.insert(limitedModel, at: 0)
-                    
-                    if !weakSelf.isRequesting {
-                        
-                        weakSelf.collectionView.reloadData()
-                    }
+                    return
                 }
                 
-            default:
-                break
+                PHPhotoLibrary.shared().presentLimitedLibraryPicker(from: vc)
             }
+            
+            extraActionModelArray.insert(limitedModel, at: 0)
+            
+            if isRequesting { return }
+            
+            collectionView.reloadData()
         }
     }
     
@@ -919,7 +922,7 @@ open class JKPHPickerView: JKPHPickerBaseView {
         
         collectionView.register(JKPHPickerCell.self, forCellWithReuseIdentifier: String(describing: JKPHPickerCell.self))
         collectionView.register(JKPHPickerAddMoreCell.self, forCellWithReuseIdentifier: String(describing: JKPHPickerAddMoreCell.self))
-        collectionView.register(JKPHPickerTakePictureCell.self, forCellWithReuseIdentifier: String(describing: JKPHPickerTakePictureCell.self))
+        collectionView.register(JKPHPickerCameraCell.self, forCellWithReuseIdentifier: String(describing: JKPHPickerCameraCell.self))
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: String(describing: UICollectionViewCell.self))
         
         collectionView.dataSource = self

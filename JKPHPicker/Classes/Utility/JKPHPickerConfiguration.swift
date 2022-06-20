@@ -95,22 +95,22 @@ open class JKPHPickerConfiguration: NSObject {
     /// 视频是否可以与其它类型同时选择 默认true
     open var isSelectVideoSimultaneously = true
     
-    /// 是否监听相册变化 默认true
-    open var isObservePhotoLibraryChange = true
+    /// 是否监听相册变化 默认false
+    open var isObservePhotoLibraryChange = false
     
-    /// 是否导出原图
+    /// 是否导出原图 默认false
     open var isExportOriginalImage = false
     
     /// 是否展示原图按钮 默认false
-    open var showsOriginalImageButton = false
+    open var isShowsOriginalButton = false
     
     /// 是否展示相机拍照 默认false
-    //open var showsCamera = false
+    open var isShowCameraItem = false
     
-    /// 是否使用系统相机拍照
+    /// 是否使用系统相机拍照 默认false
     //open var isUseSystemCamera = false
     
-    /// 是否可以编辑
+    /// 是否可以编辑 默认false
     open var isEditable = false
     
     open var editConfiguration = JKPHPickerEditConfiguration(clipRatio: .zero, isClipCircle: false)

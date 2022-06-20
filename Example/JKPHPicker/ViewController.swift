@@ -478,8 +478,10 @@ class ViewController: UIViewController {
         filter.videoMaxCount = videoMaxCount
         
         let configuration = JKPHPickerConfiguration(filter: filter)
-        configuration.showsOriginalImageButton = true
-        //configuration.isObservePhotoLibraryChange = false
+        configuration.isEditable = true
+        configuration.isShowCameraItem = true
+        configuration.isShowsOriginalButton = true
+        configuration.isObservePhotoLibraryChange = true
         
         configuration.isSelectVideoSimultaneously = isSelectVideoSimultaneously
         
