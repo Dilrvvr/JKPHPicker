@@ -14,13 +14,13 @@ public extension JKPHPickerEngine {
     static func queryAllPhotoItem(in albumItem: JKPHPickerAlbumItem,
                                   seletedCache: [String : JKPHPickerPhotoItem],
                                   configuration: JKPHPickerConfiguration,
-                                  completionHandler: @escaping ((_ dataArray: [JKPHPickerPhotoItem], _ refreshSeletedCache: [String : JKPHPickerPhotoItem], _ photoItemCache: [String : JKPHPickerPhotoItem]) -> Void)) {
+                                  completionHandler: @escaping ((_ photoItemArray: [JKPHPickerPhotoItem], _ refreshSeletedCache: [String : JKPHPickerPhotoItem], _ photoItemCache: [String : JKPHPickerPhotoItem]) -> Void)) {
         
         let startTime = CFAbsoluteTimeGetCurrent()
         
         queue.async {
             
-            fetchAllPhotoItemFromAlbum(albumItem, seletedCache: seletedCache, configuration: configuration) { dataArray, seletedCache, photoItemCache in
+            fetchAllPhotoItemFromAlbum(albumItem, seletedCache: seletedCache, configuration: configuration) { photoItemArray, seletedCache, photoItemCache in
                 
                 DispatchQueue.main.async {
                     
@@ -28,7 +28,7 @@ public extension JKPHPickerEngine {
                     
                     print("startTime-->\(startTime)\nendTime-->\(endTime)\nduration-->\(endTime - startTime)")
                     
-                    completionHandler(dataArray, seletedCache, photoItemCache)
+                    completionHandler(photoItemArray, seletedCache, photoItemCache)
                 }
             }
         }
@@ -41,7 +41,7 @@ public extension JKPHPickerEngine {
     private static func fetchAllPhotoItemFromAlbum(_ albumItem: JKPHPickerAlbumItem,
                                                    seletedCache: [String : JKPHPickerPhotoItem],
                                                    configuration: JKPHPickerConfiguration,
-                                                   completionHandler: @escaping ((_ dataArray: [JKPHPickerPhotoItem], _ refreshSeletedCache: [String : JKPHPickerPhotoItem], _ photoItemCache: [String : JKPHPickerPhotoItem]) -> Void)) {
+                                                   completionHandler: @escaping ((_ photoItemArray: [JKPHPickerPhotoItem], _ refreshSeletedCache: [String : JKPHPickerPhotoItem], _ photoItemCache: [String : JKPHPickerPhotoItem]) -> Void)) {
         
         var firstSelectType: JKPHPickerMediaType?
         
@@ -66,7 +66,7 @@ public extension JKPHPickerEngine {
         
         var cache = seletedCache
         
-        var dataArray = [JKPHPickerPhotoItem]()
+        var photoItemArray = [JKPHPickerPhotoItem]()
         
         var photoItemCache = [String : JKPHPickerPhotoItem]()
         
@@ -85,7 +85,7 @@ public extension JKPHPickerEngine {
             
             photoItem.isSelectable = nextSelectTypes.contains(photoItem.mediaType)
             
-            dataArray.append(photoItem)
+            photoItemArray.append(photoItem)
             
             photoItemCache[photoItem.localIdentifier] = photoItem
             
@@ -108,9 +108,9 @@ public extension JKPHPickerEngine {
         
         DispatchQueue.main.async {
             
-            albumItem.updatePhotoCount(dataArray.count)
+            albumItem.updatePhotoCount(photoItemArray.count)
         }
         
-        completionHandler(dataArray, cache, photoItemCache)
+        completionHandler(photoItemArray, cache, photoItemCache)
     }
 }

@@ -14,7 +14,7 @@ public extension JKPHPickerEngine {
     static func exportImage(with photoItemArray: [JKPHPickerPhotoItem],
                             scale: CGFloat,
                             progressHandler: ((_ totalProgress: Double) -> Void)? = nil,
-                            completionHandler: @escaping ((_ dataArray: [JKPHPickerImageResult]) -> Void)) {
+                            completionHandler: @escaping ((_ resultArray: [JKPHPickerImageResult]) -> Void)) {
         
         var resultArray = [JKPHPickerImageResult]()
         
@@ -129,7 +129,7 @@ public extension JKPHPickerEngine {
     /// 批量导出image data
     static func exportImageData(with photoItemArray: [JKPHPickerPhotoItem],
                                 progressHandler: ((_ totalProgress: Double) -> Void)? = nil,
-                                completionHandler: @escaping ((_ dataArray: [JKPHPickerImageDataResult]) -> Void)) {
+                                completionHandler: @escaping ((_ resultArray: [JKPHPickerImageDataResult]) -> Void)) {
         
         var resultArray = [JKPHPickerImageDataResult]()
         
@@ -241,7 +241,7 @@ public extension JKPHPickerEngine {
     /// 批量导出AVAsset
     static func exportVideoAVAsset(with photoItemArray: [JKPHPickerPhotoItem],
                                    progressHandler: ((_ totalProgress: Double) -> Void)? = nil,
-                                   completionHandler: @escaping ((_ dataArray: [JKPHPickerVideoAssetResult]) -> Void)) {
+                                   completionHandler: @escaping ((_ resultArray: [JKPHPickerVideoAssetResult]) -> Void)) {
         
         var resultArray = [JKPHPickerVideoAssetResult]()
         
@@ -354,7 +354,7 @@ public extension JKPHPickerEngine {
     static func exportLivePhoto(with photoItemArray: [JKPHPickerPhotoItem],
                                 scale: CGFloat,
                                 progressHandler: ((_ totalProgress: Double) -> Void)? = nil,
-                                completionHandler: @escaping ((_ dataArray: [JKPHPickerLivePhotoResult]) -> Void)) {
+                                completionHandler: @escaping ((_ resultArray: [JKPHPickerLivePhotoResult]) -> Void)) {
         
         var resultArray = [JKPHPickerLivePhotoResult]()
         
@@ -468,7 +468,7 @@ public extension JKPHPickerEngine {
     /// 批量导出url
     static func exportUrl(with photoItemArray: [JKPHPickerPhotoItem],
                           progressHandler: ((_ totalProgress: Double) -> Void)? = nil,
-                          completionHandler: @escaping ((_ dataArray: [JKPHPickerImageUrlResult]) -> Void)) {
+                          completionHandler: @escaping ((_ resultArray: [JKPHPickerImageUrlResult]) -> Void)) {
         
         var resultArray = [JKPHPickerImageUrlResult]()
         

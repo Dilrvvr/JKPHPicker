@@ -35,9 +35,9 @@ open class JKPHPickerAlbumView: JKPHPickerUIView {
     // MARK:
     // MARK: - Public Methods
     
-    open func updateAlbumDataArray(_ dataArray: [JKPHPickerAlbumItem]) {
+    open func updateAlbumDataArray(_ albumItemArray: [JKPHPickerAlbumItem]) {
         
-        albumDataArray = dataArray
+        albumDataArray = albumItemArray
         
         tableView.reloadData()
     }

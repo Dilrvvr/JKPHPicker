@@ -491,11 +491,11 @@ class ViewController: UIViewController {
                 
                 print("totalProgress-->\(totalProgress)")
                 
-            } completionHandler: { [weak self] dataArray in
+            } completionHandler: { [weak self] resultArray in
                 
                 guard let _ = self else { return }
                 
-                if let firstResult = dataArray.first,
+                if let firstResult = resultArray.first,
                    let firstImage = firstResult.image {
                     
                     // TODO: - JKTODO <#注释#>

@@ -597,22 +597,22 @@ open class JKPHPickerView: JKPHPickerBaseView {
         
         let selectedItemArray = selectedPhotoItemArray
         
-        JKPHPickerEngine.exportVideoAVAsset(with: selectedItemArray) { dataArray in
+        JKPHPickerEngine.exportVideoAVAsset(with: selectedItemArray) { resultArray in
             
-            print(dataArray)
+            print(resultArray)
         }
         
         return;
         
-        JKPHPickerEngine.exportLivePhoto(with: selectedItemArray, scale: 1.0) { dataArray in
+        JKPHPickerEngine.exportLivePhoto(with: selectedItemArray, scale: 1.0) { resultArray in
             
-            print(dataArray)
+            print(resultArray)
         }
         
         return;
-        JKPHPickerEngine.exportImageData(with: selectedItemArray) { dataArray in
+        JKPHPickerEngine.exportImageData(with: selectedItemArray) { resultArray in
             
-            for item in dataArray {
+            for item in resultArray {
                 
                 if let data = item.imageData,
                    let image = UIImage(data: data) {
@@ -624,9 +624,9 @@ open class JKPHPickerView: JKPHPickerBaseView {
         
         return;
         // 750 481
-        JKPHPickerEngine.exportImage(with: selectedItemArray, scale: 1.0) { dataArray in
+        JKPHPickerEngine.exportImage(with: selectedItemArray, scale: 1.0) { resultArray in
             
-            print(dataArray)
+            print(resultArray)
         }
     }
     

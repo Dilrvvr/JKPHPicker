@@ -336,9 +336,9 @@ open class JKPHPickerBrowserView: JKPHPickerBaseView {
         
         if configuration.isExportOriginalImage {
             
-            JKPHPickerEngine.exportImage(with: [item], scale: 1.0, progressHandler: nil) { [weak self] dataArray in
+            JKPHPickerEngine.exportImage(with: [item], scale: 1.0, progressHandler: nil) { [weak self] resultArray in
                 
-                guard let result = dataArray.first,
+                guard let result = resultArray.first,
                       let image = result.image else {
                           
                           self?.editButton.jk.stopIndicatorLoading()
@@ -712,9 +712,9 @@ extension JKPHPickerBrowserView: UICollectionViewDataSource, UICollectionViewDel
         
         guard let realDataSource = dataSource else { return 0 }
         
-        let dataArray = realDataSource.browserView(self, photoItemArrayIn: section)
+        let photoItemArray = realDataSource.browserView(self, photoItemArrayIn: section)
         
-        return dataArray.count
+        return photoItemArray.count
     }
     
     open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

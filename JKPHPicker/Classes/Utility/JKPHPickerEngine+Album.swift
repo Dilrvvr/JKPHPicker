@@ -104,7 +104,7 @@ public extension JKPHPickerEngine {
     private static func fetchAllAlbumItem(with configuration: JKPHPickerConfiguration,
                                           _ completionHandler: ((_ albumList: [JKPHPickerAlbumItem], _ albumCache: [String : JKPHPickerAlbumItem]) -> Void)) {
         
-        var dataArray = [JKPHPickerAlbumItem]()
+        var albumItemArray = [JKPHPickerAlbumItem]()
         var albumCache = [String : JKPHPickerAlbumItem]()
         
         let smartAlbum = fetchSmartAlbum()
@@ -129,14 +129,14 @@ public extension JKPHPickerEngine {
             
             if isRecentAlbum { // 最近项目
                 
-                dataArray.insert(albumItem, at: 0)
+                albumItemArray.insert(albumItem, at: 0)
                 
                 albumCache[albumItem.localIdentifier] = albumItem
                 
                 return
             }
             
-            dataArray.append(albumItem)
+            albumItemArray.append(albumItem)
             
             albumCache[albumItem.localIdentifier] = albumItem
         }
@@ -149,12 +149,12 @@ public extension JKPHPickerEngine {
                 return
             }
             
-            dataArray.append(albumItem)
+            albumItemArray.append(albumItem)
             
             albumCache[albumItem.localIdentifier] = albumItem
         }
         
-        completionHandler(dataArray, albumCache)
+        completionHandler(albumItemArray, albumCache)
     }
     
     /// 创建JKPHPickerAlbumItem
@@ -245,13 +245,13 @@ public extension JKPHPickerEngine {
         
         let result = PHAssetCollection.fetchCollections(in: collectionList, options: fetchOptions)
         
-        var dataArray = [PHAssetCollection]()
+        var assetCollectionArray = [PHAssetCollection]()
         
         result.enumerateObjects { subCollection, index, _ in
             
             if subCollection.isKind(of: PHCollectionList.self) {
                 
-                dataArray += fetchAlbumListFrom(collectionList: (subCollection as! PHCollectionList))
+                assetCollectionArray += fetchAlbumListFrom(collectionList: (subCollection as! PHCollectionList))
                 
                 return
             }
@@ -260,9 +260,9 @@ public extension JKPHPickerEngine {
             
             if !isAlbum { return }
             
-            dataArray.append(subCollection as! PHAssetCollection)
+            assetCollectionArray.append(subCollection as! PHAssetCollection)
         }
         
-        return dataArray
+        return assetCollectionArray
     }
 }

@@ -42,7 +42,7 @@ public protocol JKPHPickerResultProtocol {
     
     func exportVideo(completionHandler: ((_ videoArray: [AVAsset?]) -> Void))
     
-    func exportLivePhoto(completionHandler: ((_ dataArray: [PHLivePhoto?]) -> Void))
+    func exportLivePhoto(completionHandler: ((_ livePhotoArray: [PHLivePhoto?]) -> Void))
 }
 
 public struct JKPHPicker {
