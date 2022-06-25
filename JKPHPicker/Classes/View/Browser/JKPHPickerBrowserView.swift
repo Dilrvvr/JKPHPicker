@@ -543,6 +543,8 @@ open class JKPHPickerBrowserView: JKPHPickerBaseView {
         
         clipsToBounds = true
         
+        editButton.isHidden = !configuration.isEditable
+        
         navigationBarView.defaultButtonWidth = 60.0
         
         navigationBarView.titleLabel.numberOfLines = 0
