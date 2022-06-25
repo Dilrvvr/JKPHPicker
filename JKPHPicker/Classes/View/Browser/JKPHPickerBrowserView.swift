@@ -612,6 +612,19 @@ open class JKPHPickerBrowserView: JKPHPickerBaseView {
             
             updateSelectIcon(isSelected: newValue?.isSelected ?? false)
         }
+        
+        didSet {
+            
+            guard let currentPhotoItem = currentPhotoItem,
+                  configuration.isEditable else {
+                
+                editButton.isHidden = true
+                
+                return
+            }
+            
+            editButton.isHidden = !currentPhotoItem.isSelectable
+        }
     }
     
     /// flowLayout
