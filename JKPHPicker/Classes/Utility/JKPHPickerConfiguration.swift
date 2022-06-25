@@ -42,7 +42,7 @@ public struct JKPHPickerFilter {
     /// 是否仅展示可选择类型
     public var isOnlyDisplaySelectionTypes = true
     
-    /// 可选择类型
+    /// 可选择类型 内部将删除重复项
     public var selectionTypes: JKPHPickerPickType = .all
     
     /// 可选数量 默认9 小于0表示不限制数量

@@ -52,38 +52,86 @@ public extension JKPHPickerEngine {
             return nil
         }
         
+        // 已删除重复项，可根据数量判断是否有筛选
+        
         let allTypeCount = JKPHPickerPickType.all.count
         
         let selectTypeCount = configuration.filter.selectionTypes.count
         
         guard selectTypeCount > 0,
               selectTypeCount < allTypeCount else {
-                  
-                  return nil
-              }
+            
+            // 未进行筛选
+            
+            return nil
+        }
         
         var formatArray = [String]()
         var formatValueArray = [Any]()
+        
+        var noFormatArray = [String]()
+        var noFormatValueArray = [Any]()
         
         let selectTypes = configuration.filter.selectionTypes
         
         for item in JKPHPickerPickType.all {
             
-            guard selectTypes.contains(item) else { continue }
+            let isContained = selectTypes.contains(item)
             
             switch item {
+                
             case .image:
-                formatArray.append("mediaType = %d")
-                formatValueArray.append(PHAssetMediaType.image.rawValue)
+                
+                if isContained {
+                    
+                    formatArray.append("mediaType = %d")
+                    formatValueArray.append(PHAssetMediaType.image.rawValue)
+                    
+                    //} else {
+                    
+                    // PHAssetMediaType.image包含动图和视频，不能去除
+                    //noFormatArray.append("mediaType != %d")
+                    //noFormatValueArray.append(PHAssetMediaType.image.rawValue)
+                }
+                
             case .video:
-                formatArray.append("mediaType = %d")
-                formatValueArray.append(PHAssetMediaType.video.rawValue)
+                
+                if isContained {
+                    
+                    formatArray.append("mediaType = %d")
+                    formatValueArray.append(PHAssetMediaType.video.rawValue)
+                    
+                } else {
+                    
+                    noFormatArray.append("mediaType != %d")
+                    noFormatValueArray.append(PHAssetMediaType.video.rawValue)
+                }
+                
             case .gif:
-                formatArray.append("playbackStyle = %d")
-                formatValueArray.append(PHAsset.PlaybackStyle.imageAnimated.rawValue)
+                
+                if isContained {
+                    
+                    formatArray.append("playbackStyle = %d")
+                    formatValueArray.append(PHAsset.PlaybackStyle.imageAnimated.rawValue)
+                    
+                } else {
+                    
+                    noFormatArray.append("playbackStyle != %d")
+                    noFormatValueArray.append(PHAsset.PlaybackStyle.imageAnimated.rawValue)
+                }
+                
             case .livePhoto:
-                formatArray.append("(mediaSubtype & %d) != 0")
-                formatValueArray.append(PHAssetMediaSubtype.photoLive.rawValue)
+                
+                if isContained {
+                    
+                    formatArray.append("(mediaSubtype & %d) != 0")
+                    formatValueArray.append(PHAssetMediaSubtype.photoLive.rawValue)
+                    
+                } else {
+                    
+                    noFormatArray.append("!((mediaSubtype & %d) != 0)")
+                    noFormatValueArray.append(PHAssetMediaSubtype.photoLive.rawValue)
+                }
             }
         }
         
@@ -94,7 +142,21 @@ public extension JKPHPickerEngine {
         
         let options = PHFetchOptions()
         
-        let formatString = formatArray.joined(separator: " || ")
+        var formatString = formatArray.joined(separator: " || ")
+        
+        if noFormatArray.count > 0 {
+            
+            formatString = "(" + formatString + ")"
+            
+            let noFormatString = noFormatArray.joined(separator: " && ")
+            
+            formatString += " && ("
+            formatString += noFormatString
+            formatString += ")"
+            
+            formatValueArray += noFormatValueArray
+        }
+        
         options.predicate = NSPredicate(format: formatString, argumentArray: formatValueArray)
         
         return options
