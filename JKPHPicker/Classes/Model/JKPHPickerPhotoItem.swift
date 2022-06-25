@@ -124,6 +124,9 @@ open class JKPHPickerPhotoItem: NSObject {
     /// 媒体类型展示名称
     open private(set) var mediaTypeDisplayName: String?
     
+    /// 媒体类型展示图标名称
+    open private(set) var mediaTypeImageName: String?
+    
     /// 是否在iCloud
     open private(set) var isIniCloud = false
     
@@ -266,6 +269,7 @@ open class JKPHPickerPhotoItem: NSObject {
             
             mediaType = .video
             mediaTypeDisplayName = "Video"
+            mediaTypeImageName = "media_type_video"
             
         default:
             
@@ -280,6 +284,7 @@ open class JKPHPickerPhotoItem: NSObject {
             
             mediaType = .livePhoto
             mediaTypeDisplayName = "Live"
+            mediaTypeImageName = "media_type_livephoto"
             
         } else {
             
@@ -288,7 +293,7 @@ open class JKPHPickerPhotoItem: NSObject {
             if suffix == "gif" {
                 
                 mediaType = .gif
-                mediaTypeDisplayName = "Gif"
+                mediaTypeDisplayName = "GIF"
             }
         }
     }

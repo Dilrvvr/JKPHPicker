@@ -79,8 +79,23 @@ open class JKPHPickerCell: JKPHPickerBaseCollectionViewCell {
         
         // TODO: - JKTODO <#注释#>
         iCloudButton.isHidden = !photoItem.isIniCloud
-        mediaTypeButton.isHidden = (photoItem.mediaTypeDisplayName == nil)
-        mediaTypeButton.setTitle(photoItem.mediaTypeDisplayName, for: .normal)
+        
+        if let mediaTypeImageName = photoItem.mediaTypeImageName {
+            
+            mediaTypeButton.setTitle(nil, for: .normal)
+            mediaTypeButton.setImage(JKPHPickerResourceManager.image(named: mediaTypeImageName), for: .normal)
+            mediaTypeButton.isHidden = false
+            
+        } else if let mediaTypeDisplayName = photoItem.mediaTypeDisplayName {
+            
+            mediaTypeButton.setTitle(mediaTypeDisplayName, for: .normal)
+            mediaTypeButton.setImage(nil, for: .normal)
+            mediaTypeButton.isHidden = false
+            
+        } else {
+            
+            mediaTypeButton.isHidden = true
+        }
         
         topShadowView.isHidden = (iCloudButton.isHidden && mediaTypeButton.isHidden)
         
