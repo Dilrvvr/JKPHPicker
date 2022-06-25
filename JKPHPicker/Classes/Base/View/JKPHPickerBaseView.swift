@@ -203,14 +203,6 @@ open class JKPHPickerBaseView: JKPHPickerUIView {
     // MARK:
     // MARK: - Override
     
-    deinit {
-        
-        // TODO: - JKTODO Delete
-        let printDate = Date().addingTimeInterval(TimeInterval(NSTimeZone.system.secondsFromGMT()))
-        let fileName = "\(#file)".components(separatedBy: "/").last ?? "未知"
-        print("\(printDate) \(fileName) (Line: \(#line)) \(String(describing: Self.self)).\(#function)")
-    }
-    
     public init(frame: CGRect, configuration: JKPHPickerConfiguration) {
         
         self.configuration = configuration

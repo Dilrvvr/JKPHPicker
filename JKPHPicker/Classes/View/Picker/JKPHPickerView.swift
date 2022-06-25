@@ -1060,7 +1060,7 @@ extension JKPHPickerView: PHPhotoLibraryChangeObserver {
         
         changeTimes += 1
         
-        JKPrint("photoLibraryDidChange-->\(changeTimes)")
+        //JKPrint("photoLibraryDidChange-->\(changeTimes)")
         
         DispatchQueue.main.async { [weak self] in
             
@@ -1363,8 +1363,11 @@ extension JKPHPickerView: UICollectionViewDataSource, UICollectionViewDelegate, 
         
         let item = photoItemDataArray[indexPath.item]
         
+        delegate?.pickerView(self, didSelect: item)
+        
         
         // TODO: - JKTODO delete
+        return;
         let arr = PHAssetResource.assetResources(for: item.asset)
         print("---------------------------------")
         for resource in arr {
@@ -1372,8 +1375,6 @@ extension JKPHPickerView: UICollectionViewDataSource, UICollectionViewDelegate, 
             print(resource)
         }
         print("---------------------------------")
-        
-        delegate?.pickerView(self, didSelect: item)
     }
 }
 

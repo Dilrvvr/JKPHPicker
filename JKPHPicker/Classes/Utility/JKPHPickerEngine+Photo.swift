@@ -16,7 +16,7 @@ public extension JKPHPickerEngine {
                                   configuration: JKPHPickerConfiguration,
                                   completionHandler: @escaping ((_ photoItemArray: [JKPHPickerPhotoItem], _ refreshSeletedCache: [String : JKPHPickerPhotoItem], _ photoItemCache: [String : JKPHPickerPhotoItem]) -> Void)) {
         
-        let startTime = CFAbsoluteTimeGetCurrent()
+        //let startTime = CFAbsoluteTimeGetCurrent()
         
         queue.async {
             
@@ -24,9 +24,9 @@ public extension JKPHPickerEngine {
                 
                 DispatchQueue.main.async {
                     
-                    let endTime = CFAbsoluteTimeGetCurrent()
+                    //let endTime = CFAbsoluteTimeGetCurrent()
                     
-                    print("startTime-->\(startTime)\nendTime-->\(endTime)\nduration-->\(endTime - startTime)")
+                    //print("startTime-->\(startTime)\nendTime-->\(endTime)\nduration-->\(endTime - startTime)")
                     
                     completionHandler(photoItemArray, seletedCache, photoItemCache)
                 }

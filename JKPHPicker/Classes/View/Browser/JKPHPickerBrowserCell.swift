@@ -1030,7 +1030,6 @@ extension JKPHPickerBrowserCell: UIScrollViewDelegate {
     
     open func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         
-        print("scrollViewWillBeginDragging")
     }
     
     open func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
@@ -1040,14 +1039,10 @@ extension JKPHPickerBrowserCell: UIScrollViewDelegate {
     
     open func scrollViewDidZoom(_ scrollView: UIScrollView) {
         
-        print("scrollViewDidZoom")
-        
         updateScrollViewContentInset()
     }
     
     open func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
-        
-        print("scrollViewDidEndZooming")
         
         UIView.animate(withDuration: 0.25) {
             

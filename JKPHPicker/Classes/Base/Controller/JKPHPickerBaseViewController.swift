@@ -90,8 +90,8 @@ open class JKPHPickerBaseViewController: UIViewController {
     open override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        print("\(Self.self)-->view.frame-->\(view.frame)")
-        print("\(Self.self)-->view.bounds-->\(view.bounds)")
+        //print("\(Self.self)-->view.frame-->\(view.frame)")
+        //print("\(Self.self)-->view.bounds-->\(view.bounds)")
         
         //contentView.frame = view.bounds
         
