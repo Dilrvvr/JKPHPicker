@@ -961,7 +961,7 @@ open class JKPHPickerView: JKPHPickerBaseView {
     /// contentView
     private lazy var collectionView: UICollectionView = {
         
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.flowLayout)
         
         collectionView.scrollsToTop = true
         collectionView.backgroundView = nil

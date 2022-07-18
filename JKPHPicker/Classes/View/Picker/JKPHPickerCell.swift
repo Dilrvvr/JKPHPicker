@@ -11,7 +11,7 @@ import JKSwiftLibrary
 
 open class JKPHPickerCell: JKPHPickerBaseCollectionViewCell {
     
-    private static let layoutEdgeInset: CGFloat = 2.0
+    private static let layoutEdgeInset: CGFloat = 5.0
     
     // MARK:
     // MARK: - Public Property
@@ -37,9 +37,8 @@ open class JKPHPickerCell: JKPHPickerBaseCollectionViewCell {
             
             imageView.image = nil
             
-            favoriteImageView.isHidden = true
+            favoriteIconButton.isHidden = true
             durationLabel.isHidden = true
-            selectIndexLabel.isHidden = true
             topShadowView.isHidden = true
             iCloudButton.isHidden = true
             mediaTypeButton.isHidden = true
@@ -78,18 +77,18 @@ open class JKPHPickerCell: JKPHPickerBaseCollectionViewCell {
         updateSelectIcon(isSelected: photoItem.isSelected)
         
         // TODO: - JKTODO <#注释#>
-        iCloudButton.isHidden = !photoItem.isIniCloud
+        iCloudButton.isHidden = false// !photoItem.isIniCloud
         
         if let mediaTypeImageName = photoItem.mediaTypeImageName {
             
             mediaTypeButton.setTitle(nil, for: .normal)
-            mediaTypeButton.setImage(JKPHPickerResourceManager.image(named: mediaTypeImageName), for: .normal)
+            mediaTypeButton.setBackgroundImage(JKPHPickerResourceManager.image(named: mediaTypeImageName), for: .normal)
             mediaTypeButton.isHidden = false
             
         } else if let mediaTypeDisplayName = photoItem.mediaTypeDisplayName {
             
             mediaTypeButton.setTitle(mediaTypeDisplayName, for: .normal)
-            mediaTypeButton.setImage(nil, for: .normal)
+            mediaTypeButton.setBackgroundImage(nil, for: .normal)
             mediaTypeButton.isHidden = false
             
         } else {
@@ -99,14 +98,9 @@ open class JKPHPickerCell: JKPHPickerBaseCollectionViewCell {
         
         topShadowView.isHidden = (iCloudButton.isHidden && mediaTypeButton.isHidden)
         
-        selectIndexLabel.isHidden = !photoItem.isSelected
+        selectIconImageView.text = photoItem.isSelected ? "\(photoItem.selectIndex + 1)" : nil
         
-        if !selectIndexLabel.isHidden {
-            
-            selectIndexLabel.text = "\(photoItem.selectIndex + 1)"
-        }
-        
-        favoriteImageView.isHidden = !photoItem.asset.isFavorite
+        favoriteIconButton.isHidden = !photoItem.asset.isFavorite
         durationLabel.isHidden = !photoItem.isVideo
         
         durationLabel.text = photoItem.durationString
@@ -121,13 +115,13 @@ open class JKPHPickerCell: JKPHPickerBaseCollectionViewCell {
             imageView.setPhotoPickerImage(with: photoItem, configuration: configuration, imageCache: thumbnailImageCache, requestType: .thumbnail) { [weak self] photoItem, image, info, error in
                 
                 guard let _ = self,
-                      let _ = image,
+                      let image = image,
                       let cache = self?.thumbnailImageCache else {
                           
                           return
                       }
                 
-                cache.setObject(image!, forKey: NSString(string: photoItem.localIdentifier))
+                cache.setObject(image, forKey: NSString(string: photoItem.localIdentifier))
             }
         }
     }
@@ -156,40 +150,98 @@ open class JKPHPickerCell: JKPHPickerBaseCollectionViewCell {
         
         nonselectableCoverView.frame = contentView.bounds
         
-        selectIconImageView.frame = CGRect(x: contentView.bounds.width - Self.selectIconWH - Self.layoutEdgeInset, y: contentView.bounds.height - Self.selectIconWH - Self.layoutEdgeInset, width: Self.selectIconWH, height: Self.selectIconWH)
-        
-        selectButton.frame = CGRect(x: contentView.bounds.width - Self.selectButtonSize.width, y: contentView.bounds.height - Self.selectButtonSize.height, width: Self.selectButtonSize.width, height: Self.selectButtonSize.height)
-        
-        let favoriteImageWH: CGFloat = 18.0
-        favoriteImageView.frame = CGRect(x: Self.layoutEdgeInset, y: selectIconImageView.frame.minY + (selectIconImageView.frame.height - favoriteImageWH) * 0.5, width: favoriteImageWH, height: favoriteImageWH)
-        
-        var size = durationLabel.sizeThatFits(CGSize(width: CGFloat.infinity, height: selectIconImageView.bounds.height))
-        size.width += 2.0;
-        durationLabel.frame = CGRect(x: Self.layoutEdgeInset + (favoriteImageView.isHidden ? 0.0 : favoriteImageView.frame.maxX), y: selectIconImageView.frame.minY, width: size.width, height: selectIconImageView.bounds.height)
-        
         bottomShadowView.frame = CGRect(x: 0.0, y: selectIconImageView.frame.minY - 8.0, width: contentView.bounds.width, height: contentView.bounds.height - (selectIconImageView.frame.minY - 8.0))
         bottomShadowLayer.frame = bottomShadowView.bounds
         
         topShadowView.frame = CGRect(x: 0.0, y: 0.0, width: contentView.bounds.width, height: bottomShadowView.bounds.height)
         topShadowLayer.frame = topShadowView.bounds
         
-        iCloudButton.frame = CGRect(x: Self.layoutEdgeInset, y: Self.layoutEdgeInset, width: 16.3, height: 15.67)
+        selectIconImageView.frame = CGRect(x: contentView.bounds.width - Self.selectIconWH - Self.layoutEdgeInset, y: Self.layoutEdgeInset, width: Self.selectIconWH, height: Self.selectIconWH)
         
-        let mediaTypeWidth = mediaTypeButton.isHidden ? 1.0 : mediaTypeButton.sizeThatFits(CGSize(width: CGFloat.infinity, height: CGFloat.infinity)).width + 3.0
-        let mediaTypeHeight = max(mediaTypeFont.lineHeight + Self.layoutEdgeInset * 1.5, Self.selectIconWH)
-        let mediaTypeX = (iCloudButton.isHidden ? Self.layoutEdgeInset : (iCloudButton.frame.maxX + Self.layoutEdgeInset))
-        let mediaTypeY = (iCloudButton.isHidden ? Self.layoutEdgeInset : (Self.layoutEdgeInset * 2.0 + iCloudButton.frame.height - mediaTypeHeight) * 0.5)
-        mediaTypeButton.frame = CGRect(x: mediaTypeX, y: mediaTypeY, width: mediaTypeWidth, height: mediaTypeHeight)
+        selectButton.frame = CGRect(x: contentView.bounds.width - Self.selectButtonSize.width, y: 0.0, width: Self.selectButtonSize.width, height: Self.selectButtonSize.height)
         
-        size = selectIndexLabel.sizeThatFits(CGSize(width: CGFloat.infinity, height: Self.selectIconWH))
-        size.width += 2.0;
-        selectIndexLabel.frame = CGRect(x: 0.0, y: Self.layoutEdgeInset, width: size.width, height: Self.selectIconWH)
-        selectIndexLabel.center.x = selectIconImageView.center.x
+        let iconMaxWH: CGFloat = 18.0
         
-        if selectIndexLabel.frame.maxX > selectIconImageView.frame.maxX {
+        iCloudButton.sizeToFit()
+        
+        var previousSize = iCloudButton.frame.size
+        
+        iCloudButton.frame.size.height = iconMaxWH
+        iCloudButton.frame.size.width = JKGetScaleWidth(currentHeight: iCloudButton.frame.size.height, scaleWidth: previousSize.width, scaleHeight: previousSize.height)
+        
+        if iCloudButton.frame.size.width > iconMaxWH {
             
-            selectIndexLabel.frame.origin.x = contentView.bounds.width - Self.layoutEdgeInset - selectIndexLabel.bounds.width
+            iCloudButton.frame.size.width = iconMaxWH
+            iCloudButton.frame.size.height = JKGetScaleHeight(currentWidth: iCloudButton.frame.size.width, scaleWidth: previousSize.width, scaleHeight: previousSize.height)
         }
+        
+        //iCloudButton.frame = CGRect(x: Self.layoutEdgeInset, y: Self.layoutEdgeInset, width: 16.3, height: 15.67)
+        iCloudButton.frame.origin.x = Self.layoutEdgeInset
+        iCloudButton.center.y = selectIconImageView.center.y
+        
+        mediaTypeButton.sizeToFit()
+        previousSize = mediaTypeButton.frame.size
+        
+        mediaTypeButton.frame.size.height = iconMaxWH
+        mediaTypeButton.frame.size.width = JKGetScaleWidth(currentHeight: mediaTypeButton.frame.size.height, scaleWidth: previousSize.width, scaleHeight: previousSize.height)
+        
+        if mediaTypeButton.frame.size.width > iconMaxWH {
+            
+            mediaTypeButton.frame.size.width = iconMaxWH
+            mediaTypeButton.frame.size.height = JKGetScaleHeight(currentWidth: mediaTypeButton.frame.size.width, scaleWidth: previousSize.width, scaleHeight: previousSize.height)
+        }
+        
+        let mediaTypeX = (iCloudButton.isHidden ? Self.layoutEdgeInset : (iCloudButton.frame.maxX + Self.layoutEdgeInset))
+        mediaTypeButton.frame.origin.x = mediaTypeX
+        mediaTypeButton.center.y = selectIconImageView.center.y
+        
+        favoriteIconButton.sizeToFit()
+        previousSize = favoriteIconButton.frame.size
+        
+        favoriteIconButton.frame.size.height = iconMaxWH
+        favoriteIconButton.frame.size.width = JKGetScaleWidth(currentHeight: favoriteIconButton.frame.size.height, scaleWidth: previousSize.width, scaleHeight: previousSize.height)
+        
+        if favoriteIconButton.frame.size.width > iconMaxWH {
+            
+            favoriteIconButton.frame.size.width = iconMaxWH
+            favoriteIconButton.frame.size.height = JKGetScaleHeight(currentWidth: favoriteIconButton.frame.size.width, scaleWidth: previousSize.width, scaleHeight: previousSize.height)
+        }
+        
+        favoriteIconButton.frame.origin.y = (contentView.bounds.height - Self.layoutEdgeInset - favoriteIconButton.bounds.height)
+        
+        if iCloudButton.isHidden,
+           mediaTypeButton.isHidden {
+            
+            favoriteIconButton.frame.origin.x = Self.layoutEdgeInset
+            
+        } else if iCloudButton.isHidden {
+            
+            if let imageView = mediaTypeButton.imageView,
+               let _ = imageView.image {
+                
+                favoriteIconButton.center.x = mediaTypeButton.frame.minX + imageView.bounds.width * 0.5
+                
+            } else if let titleLabel = mediaTypeButton.titleLabel {
+                
+                favoriteIconButton.center.x = mediaTypeButton.frame.minX + titleLabel.bounds.width * 0.5
+                
+            } else {
+                
+                favoriteIconButton.center.x = mediaTypeButton.center.x
+            }
+            
+        } else {
+            
+            favoriteIconButton.center.x = iCloudButton.center.x
+        }
+        
+        var size = durationLabel.sizeThatFits(CGSize(width: CGFloat.infinity, height: Self.selectIconWH))
+        size.width += 2.0
+        durationLabel.frame = CGRect(x: (contentView.bounds.width - Self.layoutEdgeInset - size.width), y: 0.0, width: size.width, height: size.height)
+        
+        //durationLabel.frame.origin.y = contentView.bounds.height - Self.layoutEdgeInset - size.height
+        
+        durationLabel.center.y = favoriteIconButton.center.y
     }
     
     // MARK:
@@ -233,8 +285,7 @@ open class JKPHPickerCell: JKPHPickerBaseCollectionViewCell {
         contentView.addSubview(bottomShadowView)
         contentView.addSubview(iCloudButton)
         contentView.addSubview(mediaTypeButton)
-        contentView.addSubview(selectIndexLabel)
-        contentView.addSubview(favoriteImageView)
+        contentView.addSubview(favoriteIconButton)
         contentView.addSubview(durationLabel)
         contentView.addSubview(selectButton)
         contentView.addSubview(selectIconImageView)
@@ -279,6 +330,7 @@ open class JKPHPickerCell: JKPHPickerBaseCollectionViewCell {
         let button = UIButton(type: .custom)
         
         button.isUserInteractionEnabled = false
+        
         var image: UIImage?
         
         if #available(iOS 13.0, *) {
@@ -313,22 +365,9 @@ open class JKPHPickerCell: JKPHPickerBaseCollectionViewCell {
         button.contentHorizontalAlignment = .left
         button.imageView?.contentMode = .scaleAspectFit
         button.contentEdgeInsets = .zero
-        button.titleLabel?.font = mediaTypeFont
+        button.titleLabel?.font = self.mediaTypeFont
         
         return button
-    }()
-    
-    /// selectIndexLabel
-    private lazy var selectIndexLabel: UILabel = {
-        
-        let label = UILabel()
-        
-        label.isHidden = true
-        label.font = UIFont.systemFont(ofSize: 11.0)
-        label.textColor = .white
-        label.textAlignment = .right
-        
-        return label
     }()
     
     /// topShadowView
@@ -390,11 +429,13 @@ open class JKPHPickerCell: JKPHPickerBaseCollectionViewCell {
     }()
     
     /// 收藏的图标
-    private lazy var favoriteImageView: UIImageView = {
+    private lazy var favoriteIconButton: UIButton = {
         
-        let imageView = UIImageView()
+        let button = UIButton(type: .custom)
         
-        imageView.contentMode = .scaleAspectFit
+        button.isUserInteractionEnabled = false
+        button.contentHorizontalAlignment = .left
+        button.contentVerticalAlignment = .bottom
         
         var image: UIImage?
         
@@ -413,9 +454,9 @@ open class JKPHPickerCell: JKPHPickerBaseCollectionViewCell {
             image = JKPHPickerResourceManager.image(named: "heart_fill_icon")
         }
         
-        imageView.image = image
+        button.setBackgroundImage(image, for: .normal)
         
-        return imageView
+        return button
     }()
     
     /// durationLabel
@@ -425,7 +466,7 @@ open class JKPHPickerCell: JKPHPickerBaseCollectionViewCell {
         
         label.font = UIFont.systemFont(ofSize: 11.0)
         label.textColor = .white
-        label.textAlignment = .left
+        label.textAlignment = .right
         
         return label
     }()
