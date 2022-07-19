@@ -76,8 +76,7 @@ open class JKPHPickerCell: JKPHPickerBaseCollectionViewCell {
         
         updateSelectIcon(isSelected: photoItem.isSelected)
         
-        // TODO: - JKTODO <#注释#>
-        iCloudButton.isHidden = false// !photoItem.isIniCloud
+        iCloudButton.isHidden = !photoItem.isIniCloud
         
         if let mediaTypeImageName = photoItem.mediaTypeImageName {
             
@@ -216,12 +215,8 @@ open class JKPHPickerCell: JKPHPickerBaseCollectionViewCell {
             
         } else if iCloudButton.isHidden {
             
-            if let imageView = mediaTypeButton.imageView,
-               let _ = imageView.image {
-                
-                favoriteIconButton.center.x = mediaTypeButton.frame.minX + imageView.bounds.width * 0.5
-                
-            } else if let titleLabel = mediaTypeButton.titleLabel {
+            if let titleLabel = mediaTypeButton.titleLabel,
+               let _ = titleLabel.text {
                 
                 favoriteIconButton.center.x = mediaTypeButton.frame.minX + titleLabel.bounds.width * 0.5
                 
