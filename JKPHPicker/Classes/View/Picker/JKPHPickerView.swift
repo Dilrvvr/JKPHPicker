@@ -1146,11 +1146,11 @@ extension JKPHPickerView: UICollectionViewDataSource, UICollectionViewDelegate, 
         
         guard index >= 0,
               index < extraActionModelArray.count else {
-                  
-                  let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: UICollectionViewCell.self), for: indexPath)
-                  
-                  return cell
-              }
+            
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: UICollectionViewCell.self), for: indexPath)
+            
+            return cell
+        }
         
         let actionModel = extraActionModelArray[index]
         
@@ -1176,6 +1176,78 @@ extension JKPHPickerView: UICollectionViewDataSource, UICollectionViewDelegate, 
         }
     }
     
+    private func refreshSelectedPhotoItemArray() {
+        
+        for (index, value) in selectedPhotoItemArray.enumerated() {
+            
+            if value.selectIndex == index { continue }
+            
+            value.selectIndex = index
+            
+            reloadPhotoItem(value)
+        }
+    }
+    
+    private func reloadPhotoItem(_ photoItem: JKPHPickerPhotoItem) {
+        
+        if let handler = photoItem.reloadPickerHandler {
+            
+            handler(photoItem, false)
+            
+        } else {
+            
+            collectionView.reloadItems(at: [photoItem.indexPath])
+        }
+    }
+    
+    open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        isPreviewSelected = false
+        
+        guard let _ = delegate else { return }
+        
+        guard photoItemDataArray.count > indexPath.item else {
+            
+            let index = indexPath.item - photoItemDataArray.count
+            
+            guard index >= 0,
+                  index < extraActionModelArray.count else {
+                
+                return
+            }
+            
+            let actionModel = extraActionModelArray[index]
+            
+            if let handler = actionModel.actionHandler {
+                
+                handler(actionModel)
+            }
+            
+            return
+        }
+        
+        let item = photoItemDataArray[indexPath.item]
+        
+        delegate?.pickerView(self, didSelect: item)
+        
+        
+        // TODO: - JKTODO delete
+        return;
+        let arr = PHAssetResource.assetResources(for: item.asset)
+        print("---------------------------------")
+        for resource in arr {
+            
+            print(resource)
+        }
+        print("---------------------------------")
+    }
+}
+
+// MARK:
+// MARK: - 选中逻辑
+
+extension JKPHPickerView {
+    
     /// 处理选中
     private func solveDidSelectPhotoItem(_ photoItem: JKPHPickerPhotoItem) {
         
@@ -1184,6 +1256,63 @@ extension JKPHPickerView: UICollectionViewDataSource, UICollectionViewDelegate, 
         updateBottomButtonUI()
         
         checkUpdateNextSelectTypes()
+    }
+    
+    private func checkUpdateSelectStatus(photoItem: JKPHPickerPhotoItem) {
+        
+        if let item = photoItemListCache[photoItem.localIdentifier] {
+            
+            if item == photoItem {
+                
+                executeUpdateSelectStatus(item)
+                
+                return
+            }
+            
+            photoItem.isSelected = !photoItem.isSelected
+            
+            executeUpdateSelectStatus(item)
+            
+            return
+        }
+        
+        photoItem.isSelected = !photoItem.isSelected
+        
+        if photoItem.isSelected {
+            
+            photoItem.selectIndex = selectedPhotoItemArray.count
+            
+            selectedPhotoItemArray.append(photoItem)
+            selectedPhotoItemCache[photoItem.localIdentifier] = photoItem
+            
+            if photoItem.isVideo {
+                
+                videoSelectedCount += 1
+            }
+            
+            return
+        }
+        
+        guard let item = selectedPhotoItemCache[photoItem.localIdentifier],
+              let index = selectedPhotoItemArray.firstIndex(of: item) else {
+            
+            return
+        }
+        
+        if item.isVideo {
+            
+            videoSelectedCount -= 1
+        }
+        
+        item.isSelected = false
+        item.selectIndex = JKPHPickerPhotoItem.defaultSelectIndex
+        
+        selectedPhotoItemCache.removeValue(forKey: item.localIdentifier)
+        selectedPhotoItemArray.remove(at: index)
+        
+        if index == selectedPhotoItemArray.count { return }
+        
+        refreshSelectedPhotoItemArray()
     }
     
     private func executeUpdateSelectStatus(_ photoItem: JKPHPickerPhotoItem) {
@@ -1217,14 +1346,14 @@ extension JKPHPickerView: UICollectionViewDataSource, UICollectionViewDelegate, 
             
             if !photoItem.isSelectable { return }
             
-//            if configuration.isSelectNone { return }
+            //            if configuration.isSelectNone { return }
             
-//            if selectedPhotoItemArray.count >= configuration.selectPhotoMaxCount {
-//
-//                // TODO: - JKTODO <#注释#>
-//
-//                return
-//            }
+            //            if selectedPhotoItemArray.count >= configuration.selectPhotoMaxCount {
+            //
+            //                // TODO: - JKTODO <#注释#>
+            //
+            //                return
+            //            }
         }
         
         photoItem.isSelected = !photoItem.isSelected
@@ -1286,79 +1415,6 @@ extension JKPHPickerView: UICollectionViewDataSource, UICollectionViewDelegate, 
         // 取消的不是最后一个，需要刷新整个选中数组
         refreshSelectedPhotoItemArray()
     }
-    
-    private func refreshSelectedPhotoItemArray() {
-        
-        for (index, value) in selectedPhotoItemArray.enumerated() {
-            
-            if value.selectIndex == index { continue }
-            
-            value.selectIndex = index
-            
-            reloadPhotoItem(value)
-        }
-    }
-    
-    private func reloadPhotoItem(_ photoItem: JKPHPickerPhotoItem) {
-        
-        if let handler = photoItem.reloadPickerHandler {
-            
-            handler(photoItem, false)
-            
-        } else {
-            
-            collectionView.reloadItems(at: [photoItem.indexPath])
-        }
-    }
-    
-    open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        isPreviewSelected = false
-        
-        guard let _ = delegate else { return }
-        
-        guard photoItemDataArray.count > indexPath.item else {
-            
-            let index = indexPath.item - photoItemDataArray.count
-            
-            guard index >= 0,
-                  index < extraActionModelArray.count else {
-                      
-                      return
-                  }
-            
-            let actionModel = extraActionModelArray[index]
-            
-            if let handler = actionModel.actionHandler {
-                
-                handler(actionModel)
-            }
-            
-            return
-        }
-        
-        let item = photoItemDataArray[indexPath.item]
-        
-        delegate?.pickerView(self, didSelect: item)
-        
-        
-        // TODO: - JKTODO delete
-        return;
-        let arr = PHAssetResource.assetResources(for: item.asset)
-        print("---------------------------------")
-        for resource in arr {
-            
-            print(resource)
-        }
-        print("---------------------------------")
-    }
-}
-
-// MARK:
-// MARK: - 选中逻辑
-
-extension JKPHPickerView {
-    
 }
 
 // MARK:
@@ -1591,63 +1647,6 @@ extension JKPHPickerView: JKPHPickerBrowserViewDataSource, JKPHPickerBrowserView
                 JKPHPickerEngine.cancelImageRequest(requestID)
             }
         }
-    }
-    
-    private func checkUpdateSelectStatus(photoItem: JKPHPickerPhotoItem) {
-        
-        if let item = photoItemListCache[photoItem.localIdentifier] {
-            
-            if item == photoItem {
-                
-                executeUpdateSelectStatus(item)
-                
-                return
-            }
-            
-            photoItem.isSelected = !photoItem.isSelected
-            
-            executeUpdateSelectStatus(item)
-            
-            return
-        }
-        
-        photoItem.isSelected = !photoItem.isSelected
-        
-        if photoItem.isSelected {
-            
-            photoItem.selectIndex = selectedPhotoItemArray.count
-            
-            selectedPhotoItemArray.append(photoItem)
-            selectedPhotoItemCache[photoItem.localIdentifier] = photoItem
-            
-            if photoItem.isVideo {
-                
-                videoSelectedCount += 1
-            }
-            
-            return
-        }
-        
-        guard let item = selectedPhotoItemCache[photoItem.localIdentifier],
-              let index = selectedPhotoItemArray.firstIndex(of: item) else {
-                  
-                  return
-              }
-        
-        if item.isVideo {
-            
-            videoSelectedCount -= 1
-        }
-        
-        item.isSelected = false
-        item.selectIndex = JKPHPickerPhotoItem.defaultSelectIndex
-        
-        selectedPhotoItemCache.removeValue(forKey: item.localIdentifier)
-        selectedPhotoItemArray.remove(at: index)
-        
-        if index == selectedPhotoItemArray.count { return }
-        
-        refreshSelectedPhotoItemArray()
     }
 }
 
