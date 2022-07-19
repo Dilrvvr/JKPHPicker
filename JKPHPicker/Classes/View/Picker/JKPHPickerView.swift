@@ -1170,13 +1170,14 @@ extension JKPHPickerView: UICollectionViewDataSource, UICollectionViewDelegate, 
         
         cell.selectActionHandler = { [weak self] (model: JKPHPickerPhotoItem?, button: UIButton) in
             
-            guard let _ = self, let _ = model else { return }
+            guard let _ = self, let model = model else { return }
             
-            self?.updatePhotoItemSelectStatus(model!)
+            self?.solveDidSelectPhotoItem(model)
         }
     }
     
-    private func updatePhotoItemSelectStatus(_ photoItem: JKPHPickerPhotoItem) {
+    /// 处理选中
+    private func solveDidSelectPhotoItem(_ photoItem: JKPHPickerPhotoItem) {
         
         checkUpdateSelectStatus(photoItem: photoItem)
         
@@ -1354,6 +1355,13 @@ extension JKPHPickerView: UICollectionViewDataSource, UICollectionViewDelegate, 
 }
 
 // MARK:
+// MARK: - 选中逻辑
+
+extension JKPHPickerView {
+    
+}
+
+// MARK:
 // MARK: - JKPHPickerAlbumViewDelegate
 
 extension JKPHPickerView: JKPHPickerAlbumViewDelegate {
@@ -1424,7 +1432,8 @@ extension JKPHPickerView: JKPHPickerBrowserViewDataSource, JKPHPickerBrowserView
     }
     
     /// 预览动画的起始位置
-    open func browserView(_ browserView: JKPHPickerBrowserView, animationFromRectFor photoItem: JKPHPickerPhotoItem) -> CGRect {
+    open func browserView(_ browserView: JKPHPickerBrowserView,
+                          animationFromRectFor photoItem: JKPHPickerPhotoItem) -> CGRect {
         
         let fromSize = CGSize(width: 100.0, height: 100.0)
         
@@ -1454,7 +1463,8 @@ extension JKPHPickerView: JKPHPickerBrowserViewDataSource, JKPHPickerBrowserView
     }
     
     /// 预览动画图片
-    open func browserView(_ browserView: JKPHPickerBrowserView, thumbnailImageFor photoItem: JKPHPickerPhotoItem) -> UIImage? {
+    open func browserView(_ browserView: JKPHPickerBrowserView,
+                          thumbnailImageFor photoItem: JKPHPickerPhotoItem) -> UIImage? {
         
         var thumbnailImage: UIImage? = nil
         
@@ -1538,19 +1548,23 @@ extension JKPHPickerView: JKPHPickerBrowserViewDataSource, JKPHPickerBrowserView
     }
     
     /// 点击选择按钮
-    open func browserView(_ browserView: JKPHPickerBrowserView, didTapSelectButton button: UIButton, photoItem: JKPHPickerPhotoItem) {
+    open func browserView(_ browserView: JKPHPickerBrowserView,
+                          didTapSelectButton button: UIButton,
+                          photoItem: JKPHPickerPhotoItem) {
         
-        updatePhotoItemSelectStatus(photoItem)
+        solveDidSelectPhotoItem(photoItem)
     }
     
     /// 点击原图按钮
-    open func browserView(_ browserView: JKPHPickerBrowserView, didTapOriginalImageButton button: UIButton, photoItem: JKPHPickerPhotoItem) {
+    open func browserView(_ browserView: JKPHPickerBrowserView,
+                          didTapOriginalImageButton button: UIButton,
+                          photoItem: JKPHPickerPhotoItem) {
         
         isExportOriginalImage = !isExportOriginalImage
         
         if photoItem.isSelected || !isExportOriginalImage { return }
         
-        updatePhotoItemSelectStatus(photoItem)
+        solveDidSelectPhotoItem(photoItem)
     }
     
     /// 原图按钮是否应该选中
