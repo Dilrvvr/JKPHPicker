@@ -92,6 +92,9 @@ open class JKPHPickerConfiguration: NSObject {
     
     open var resultHandler: ((_ selectedItems: [JKPHPickerPhotoItem]) -> Void)?
     
+    /// 返回几列 最少3列
+    open var columnCountHandler: (() -> Int)?
+    
     /// 视频是否可以与其它类型同时选择 默认true
     open var isSelectVideoSimultaneously = true
     

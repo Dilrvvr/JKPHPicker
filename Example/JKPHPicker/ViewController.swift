@@ -483,6 +483,20 @@ class ViewController: UIViewController {
         configuration.isShowsOriginalButton = true
         configuration.isObservePhotoLibraryChange = true
         
+        /*
+        configuration.columnCountHandler = {
+            
+            if JKisDeviceiPhone {
+                
+                return JKisLandscape ? 5 : 3
+            }
+            
+            let columnCount = Int(floor(JKKeyWindow.bounds.width / 100.0))
+            
+            return columnCount
+        }
+         // */
+        
         configuration.isSelectVideoSimultaneously = isSelectVideoSimultaneously
         
         configuration.resultHandler = { selectedItems in

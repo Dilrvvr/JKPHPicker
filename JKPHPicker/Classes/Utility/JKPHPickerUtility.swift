@@ -117,6 +117,8 @@ public struct JKPHPickerUtility {
         static let darkGray = JKCreateImage(color: .darkGray, size: CGSize(width: 1.0, height: 1.0))
     }
     
+    static var minimumColumnCount: Int { 3 }
+    
     static var pickerColumnCount: Int {
         
         if JKisDeviceiPhone {

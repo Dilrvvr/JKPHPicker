@@ -1140,7 +1140,20 @@ extension JKPHPickerView: UICollectionViewDataSource, UICollectionViewDelegate, 
     
     open func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        let itemWH = (collectionView.bounds.width - CGFloat(JKPHPickerUtility.pickerColumnCount)) / CGFloat(JKPHPickerUtility.pickerColumnCount)
+        var columnCount: Int
+        
+        if let handler = configuration.columnCountHandler {
+            
+            columnCount = handler()
+            
+        } else {
+            
+            columnCount = JKPHPickerUtility.pickerColumnCount
+        }
+        
+        columnCount = max(columnCount, JKPHPickerUtility.minimumColumnCount)
+        
+        let itemWH = (collectionView.bounds.width - CGFloat(columnCount)) / CGFloat(columnCount)
         
         let itemSize = CGSize(width: itemWH, height: itemWH)
         
