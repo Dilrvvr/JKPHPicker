@@ -245,7 +245,7 @@ open class JKPHPickerView: JKPHPickerBaseView {
         
         contentView.jk.startIndicatorLoading()
         
-        JKPHPickerEngine.queryAllPhotoItem(in: currentAlbum!, seletedCache: selectedPhotoItemCache, configuration: configuration) { [weak self] dataArray, refreshSeletedCache, photoItemCache in
+        JKPHPickerEngine.queryAllPhotoItem(in: album, seletedCache: selectedPhotoItemCache, configuration: configuration) { [weak self] dataArray, refreshSeletedCache, photoItemCache in
             
             guard let _ = self else { return }
             
@@ -589,44 +589,6 @@ open class JKPHPickerView: JKPHPickerBaseView {
         if let handler = configuration.resultHandler {
             
             handler(selectedPhotoItemArray)
-        }
-        
-        // TODO: - JKTODO <#注释#>
-        
-        return;
-        
-        let selectedItemArray = selectedPhotoItemArray
-        
-        JKPHPickerEngine.exportVideoAVAsset(with: selectedItemArray) { resultArray in
-            
-            print(resultArray)
-        }
-        
-        return;
-        
-        JKPHPickerEngine.exportLivePhoto(with: selectedItemArray, scale: 1.0) { resultArray in
-            
-            print(resultArray)
-        }
-        
-        return;
-        JKPHPickerEngine.exportImageData(with: selectedItemArray) { resultArray in
-            
-            for item in resultArray {
-                
-                if let data = item.imageData,
-                   let image = UIImage(data: data) {
-                    
-                    print(image)
-                }
-            }
-        }
-        
-        return;
-        // 750 481
-        JKPHPickerEngine.exportImage(with: selectedItemArray, scale: 1.0) { resultArray in
-            
-            print(resultArray)
         }
     }
     

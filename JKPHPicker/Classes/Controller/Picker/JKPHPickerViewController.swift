@@ -150,7 +150,7 @@ open class JKPHPickerViewController: JKPHPickerBaseViewController {
     /// browserView
     private weak var browserView: JKPHPickerBrowserView?
     
-    private func createBrowserView() -> JKPHPickerBrowserView {
+    open func createBrowserView() -> JKPHPickerBrowserView {
         
         let browserView = JKPHPickerBrowserView(frame: view.bounds, configuration: self.configuration)
         
@@ -207,7 +207,7 @@ extension JKPHPickerViewController: JKPHPickerViewDelegate {
 }
 
 // MARK:
-// MARK: - JKPHPickerViewDelegate
+// MARK: - JKPHPickerNavigationBarDelegate
 
 extension JKPHPickerViewController: JKPHPickerNavigationBarDelegate {
     
