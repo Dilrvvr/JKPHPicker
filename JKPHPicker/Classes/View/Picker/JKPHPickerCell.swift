@@ -71,7 +71,7 @@ open class JKPHPickerCell: JKPHPickerBaseCollectionViewCell {
         nonselectableCoverView.isHidden = photoItem.isSelectable
         
         selectButton.isHidden = !photoItem.isSelectable
-        selectIconImageView.isHidden = selectButton.isHidden
+        selectIconLabel.isHidden = selectButton.isHidden
         
         updateSelectIcon(isSelected: photoItem.isSelected)
         
@@ -94,7 +94,7 @@ open class JKPHPickerCell: JKPHPickerBaseCollectionViewCell {
             mediaTypeButton.isHidden = true
         }
         
-        selectIconImageView.text = photoItem.isSelected ? "\(photoItem.selectIndex + 1)" : nil
+        selectIconLabel.text = photoItem.isSelected ? "\(photoItem.selectIndex + 1)" : nil
         
         favoriteIconButton.isHidden = !photoItem.asset.isFavorite
         durationLabel.isHidden = !photoItem.isVideo
@@ -146,7 +146,7 @@ open class JKPHPickerCell: JKPHPickerBaseCollectionViewCell {
         
         nonselectableCoverView.frame = contentView.bounds
         
-        selectIconImageView.frame = CGRect(x: contentView.bounds.width - Self.selectIconWH - Self.layoutEdgeInset, y: Self.layoutEdgeInset, width: Self.selectIconWH, height: Self.selectIconWH)
+        selectIconLabel.frame = CGRect(x: contentView.bounds.width - Self.selectIconWH - Self.layoutEdgeInset, y: Self.layoutEdgeInset, width: Self.selectIconWH, height: Self.selectIconWH)
         
         selectButton.frame = CGRect(x: contentView.bounds.width - Self.selectButtonSize.width, y: 0.0, width: Self.selectButtonSize.width, height: Self.selectButtonSize.height)
         
@@ -167,7 +167,7 @@ open class JKPHPickerCell: JKPHPickerBaseCollectionViewCell {
         
         //iCloudButton.frame = CGRect(x: Self.layoutEdgeInset, y: Self.layoutEdgeInset, width: 16.3, height: 15.67)
         iCloudButton.frame.origin.x = Self.layoutEdgeInset
-        iCloudButton.center.y = selectIconImageView.center.y
+        iCloudButton.center.y = selectIconLabel.center.y
         
         mediaTypeButton.sizeToFit()
         previousSize = mediaTypeButton.frame.size
@@ -183,7 +183,7 @@ open class JKPHPickerCell: JKPHPickerBaseCollectionViewCell {
         
         let mediaTypeX = (iCloudButton.isHidden ? Self.layoutEdgeInset : (iCloudButton.frame.maxX + Self.layoutEdgeInset))
         mediaTypeButton.frame.origin.x = mediaTypeX
-        mediaTypeButton.center.y = selectIconImageView.center.y
+        mediaTypeButton.center.y = selectIconLabel.center.y
         
         favoriteIconButton.sizeToFit()
         previousSize = favoriteIconButton.frame.size
@@ -272,7 +272,7 @@ open class JKPHPickerCell: JKPHPickerBaseCollectionViewCell {
         contentView.addSubview(favoriteIconButton)
         contentView.addSubview(durationLabel)
         contentView.addSubview(selectButton)
-        contentView.addSubview(selectIconImageView)
+        contentView.addSubview(selectIconLabel)
         contentView.addSubview(nonselectableCoverView)
     }
     
@@ -284,7 +284,7 @@ open class JKPHPickerCell: JKPHPickerBaseCollectionViewCell {
     /// 初始化UI数据 交给子类重写 super自动调用该方法
     open func initializeUIData() {
         
-        //self.makeShadow(view: selectIconImageView)
+        //self.makeShadow(view: selectIconLabel)
     }
     
     // MARK:

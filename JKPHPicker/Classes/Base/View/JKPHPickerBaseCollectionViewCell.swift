@@ -12,7 +12,7 @@ import JKSwiftLibrary
 open class JKPHPickerBaseCollectionViewCell: UICollectionViewCell {
     
     /// 选中图标的宽高
-    public static let selectIconWH: CGFloat = 20.0
+    public static let selectIconWH: CGFloat = 22.0
     
     /// 选中按钮的宽高
     public static let selectButtonSize: CGSize = CGSize(width: 44.0, height: 44.0)
@@ -34,8 +34,8 @@ open class JKPHPickerBaseCollectionViewCell: UICollectionViewCell {
     
     open var selectActionHandler: ((_ model: JKPHPickerPhotoItem?, _ button: UIButton) -> Void)?
     
-    /// selectIconImageView
-    open private(set) lazy var selectIconImageView: UILabel = {
+    /// selectIconLabel
+    open private(set) lazy var selectIconLabel: UILabel = {
         
         let label = UILabel()
         
@@ -90,8 +90,8 @@ open class JKPHPickerBaseCollectionViewCell: UICollectionViewCell {
     
     open func updateSelectIcon(isSelected: Bool) {
         
-        selectIconImageView.layer.backgroundColor = isSelected ? UIColor.systemBlue.cgColor : self.selectIconNormalBackgroundColor.cgColor
-        selectIconImageView.layer.borderColor = isSelected ? UIColor.clear.cgColor : UIColor.white.cgColor
+        selectIconLabel.layer.backgroundColor = isSelected ? UIColor.systemBlue.cgColor : self.selectIconNormalBackgroundColor.cgColor
+        selectIconLabel.layer.borderColor = isSelected ? UIColor.clear.cgColor : UIColor.white.cgColor
         
         if hasSelectedCover {
             
