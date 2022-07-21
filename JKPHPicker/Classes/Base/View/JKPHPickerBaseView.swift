@@ -108,6 +108,38 @@ open class JKPHPickerBaseView: JKPHPickerUIView {
         return bottomControlView
     }()
     
+    /// flowLayout
+    open private(set) lazy var flowLayout: UICollectionViewFlowLayout = {
+        
+        let flowLayout = UICollectionViewFlowLayout()
+        
+        return flowLayout
+    }()
+    
+    /// collectionView
+    open private(set) lazy var collectionView: UICollectionView = {
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.flowLayout)
+        
+        collectionView.backgroundView = nil
+        collectionView.backgroundColor = .clear
+        
+        if #available(iOS 11.0, *) {
+            collectionView.contentInsetAdjustmentBehavior = .never
+        }
+        
+        if #available(iOS 13.0, *) {
+            collectionView.automaticallyAdjustsScrollIndicatorInsets = false
+        }
+        
+        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: String(describing: UICollectionViewCell.self))
+        
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        
+        return collectionView
+    }()
+    
     // MARK:
     // MARK: - Public Methods
     
@@ -322,5 +354,23 @@ extension JKPHPickerBaseView: JKPHPickerNavigationBarViewDelegate {
     
     open func navigationBarView(_ navigationBarView: JKPHPickerNavigationBarView, didTapRight2 button: UIButton) {
         
+    }
+}
+
+// MARK:
+// MARK: - UICollectionViewDataSource & UICollectionViewDelegate
+
+extension JKPHPickerBaseView: UICollectionViewDataSource, UICollectionViewDelegate {
+    
+    open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
+        return 0
+    }
+    
+    open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: UICollectionViewCell.self), for: indexPath)
+        
+        return cell
     }
 }

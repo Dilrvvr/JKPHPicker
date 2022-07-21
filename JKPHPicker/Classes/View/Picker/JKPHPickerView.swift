@@ -629,6 +629,10 @@ open class JKPHPickerView: JKPHPickerBaseView {
     open override func initialization() {
         super.initialization()
         
+        collectionView.register(JKPHPickerCell.self, forCellWithReuseIdentifier: String(describing: JKPHPickerCell.self))
+        collectionView.register(JKPHPickerAddMoreCell.self, forCellWithReuseIdentifier: String(describing: JKPHPickerAddMoreCell.self))
+        collectionView.register(JKPHPickerCameraCell.self, forCellWithReuseIdentifier: String(describing: JKPHPickerCameraCell.self))
+        
         extraActionModelArray.removeAll()
         
         if configuration.isShowCameraItem {
@@ -774,6 +778,14 @@ open class JKPHPickerView: JKPHPickerBaseView {
         }
         
         contentView.jk_indicatorView.color = .white
+        
+        flowLayout.scrollDirection = .vertical
+        flowLayout.minimumLineSpacing = 1.0
+        flowLayout.minimumInteritemSpacing = 1.0
+        
+        collectionView.scrollsToTop = true
+        collectionView.alwaysBounceVertical = true
+        collectionView.showsHorizontalScrollIndicator = false
     }
     
     // MARK:
@@ -906,47 +918,6 @@ open class JKPHPickerView: JKPHPickerBaseView {
         albumView.isHidden = true
         
         return albumView
-    }()
-    
-    /// flowLayout
-    private lazy var flowLayout: UICollectionViewFlowLayout = {
-        
-        let flowLayout = UICollectionViewFlowLayout()
-        
-        flowLayout.scrollDirection = .vertical
-        flowLayout.minimumLineSpacing = 1.0
-        flowLayout.minimumInteritemSpacing = 1.0
-        
-        return flowLayout
-    }()
-    
-    /// contentView
-    private lazy var collectionView: UICollectionView = {
-        
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.flowLayout)
-        
-        collectionView.scrollsToTop = true
-        collectionView.backgroundView = nil
-        collectionView.backgroundColor = .clear
-        collectionView.alwaysBounceVertical = true
-        collectionView.showsHorizontalScrollIndicator = false
-        
-        if #available(iOS 11.0, *) {
-            collectionView.contentInsetAdjustmentBehavior = .never
-        }
-        if #available(iOS 13.0, *) {
-            collectionView.automaticallyAdjustsScrollIndicatorInsets = false
-        }
-        
-        collectionView.register(JKPHPickerCell.self, forCellWithReuseIdentifier: String(describing: JKPHPickerCell.self))
-        collectionView.register(JKPHPickerAddMoreCell.self, forCellWithReuseIdentifier: String(describing: JKPHPickerAddMoreCell.self))
-        collectionView.register(JKPHPickerCameraCell.self, forCellWithReuseIdentifier: String(describing: JKPHPickerCameraCell.self))
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: String(describing: UICollectionViewCell.self))
-        
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        
-        return collectionView
     }()
     
     /// limitTipView
@@ -1088,14 +1059,14 @@ extension JKPHPickerView: PHPhotoLibraryChangeObserver {
 // MARK:
 // MARK: - UICollectionViewDataSource & UICollectionViewDelegate
 
-extension JKPHPickerView: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+extension JKPHPickerView: UICollectionViewDelegateFlowLayout {
     
     open func numberOfSections(in collectionView: UICollectionView) -> Int {
         
         return 1
     }
     
-    open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    open override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         return photoItemDataArray.count + extraActionModelArray.count
     }
@@ -1122,7 +1093,7 @@ extension JKPHPickerView: UICollectionViewDataSource, UICollectionViewDelegate, 
         return itemSize
     }
     
-    open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    open override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         if photoItemDataArray.count > indexPath.item {
             

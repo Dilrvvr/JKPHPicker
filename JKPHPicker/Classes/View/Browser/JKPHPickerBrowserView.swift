@@ -510,6 +510,8 @@ open class JKPHPickerBrowserView: JKPHPickerBaseView {
     open override func initialization() {
         super.initialization()
         
+        collectionView.register(JKPHPickerBrowserCell.self, forCellWithReuseIdentifier: String(describing: JKPHPickerBrowserCell.self))
+        collectionView.register(JKPHPickerErrorCell.self, forCellWithReuseIdentifier: String(describing: JKPHPickerErrorCell.self))
     }
     
     /// 创建UI 交给子类重写 super自动调用该方法
@@ -559,6 +561,13 @@ open class JKPHPickerBrowserView: JKPHPickerBaseView {
         navigationBarView.rightButton.setTitleColor(.white, for: .normal)
         navigationBarView.rightButton.titleLabel?.adjustsFontSizeToFitWidth = true
         navigationBarView.rightButton.titleLabel?.font = UIFont.systemFont(ofSize: 13.0)
+        flowLayout.scrollDirection = .horizontal
+        flowLayout.minimumLineSpacing = 0.0
+        flowLayout.minimumInteritemSpacing = 0.0
+        
+        collectionView.isPagingEnabled = true
+        collectionView.scrollsToTop = false
+        collectionView.showsHorizontalScrollIndicator = false
     }
     
     // MARK:
@@ -627,45 +636,6 @@ open class JKPHPickerBrowserView: JKPHPickerBaseView {
         }
     }
     
-    /// flowLayout
-    private lazy var flowLayout: UICollectionViewFlowLayout = {
-        
-        let flowLayout = UICollectionViewFlowLayout()
-        
-        flowLayout.scrollDirection = .horizontal
-        flowLayout.minimumLineSpacing = 0.0
-        flowLayout.minimumInteritemSpacing = 0.0
-        
-        return flowLayout
-    }()
-    
-    /// collectionView
-    private lazy var collectionView: UICollectionView = {
-        
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
-        
-        collectionView.isPagingEnabled = true
-        collectionView.scrollsToTop = false
-        collectionView.backgroundView = nil
-        collectionView.backgroundColor = .clear
-        collectionView.showsHorizontalScrollIndicator = false
-        
-        if #available(iOS 11.0, *) {
-            collectionView.contentInsetAdjustmentBehavior = .never
-        }
-        if #available(iOS 13.0, *) {
-            collectionView.automaticallyAdjustsScrollIndicatorInsets = false
-        }
-        
-        collectionView.register(JKPHPickerBrowserCell.self, forCellWithReuseIdentifier: String(describing: JKPHPickerBrowserCell.self))
-        collectionView.register(JKPHPickerErrorCell.self, forCellWithReuseIdentifier: String(describing: JKPHPickerErrorCell.self))
-        
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        
-        return collectionView
-    }()
-    
     private lazy var editButton: UIButton = {
         
         let titleColor = UIColor.white
@@ -714,7 +684,7 @@ open class JKPHPickerBrowserView: JKPHPickerBaseView {
 // MARK:
 // MARK: - UICollectionViewDataSource & UICollectionViewDelegate
 
-extension JKPHPickerBrowserView: UICollectionViewDataSource, UICollectionViewDelegate {
+extension JKPHPickerBrowserView {
     
     open func numberOfSections(in collectionView: UICollectionView) -> Int {
         
@@ -723,7 +693,7 @@ extension JKPHPickerBrowserView: UICollectionViewDataSource, UICollectionViewDel
         return realDataSource.numberOfSections(in: self)
     }
     
-    open func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    open override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         guard let realDataSource = dataSource else { return 0 }
         
@@ -732,7 +702,7 @@ extension JKPHPickerBrowserView: UICollectionViewDataSource, UICollectionViewDel
         return photoItemArray.count
     }
     
-    open func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    open override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         guard let _ = dataSource,
               let model = dataSource?.browserView(self, photoItemAt: indexPath) else {
