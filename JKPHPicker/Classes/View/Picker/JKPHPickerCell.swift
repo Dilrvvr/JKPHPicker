@@ -39,7 +39,6 @@ open class JKPHPickerCell: JKPHPickerBaseCollectionViewCell {
             
             favoriteIconButton.isHidden = true
             durationLabel.isHidden = true
-            topShadowView.isHidden = true
             iCloudButton.isHidden = true
             mediaTypeButton.isHidden = true
             nonselectableCoverView.isHidden = true
@@ -95,8 +94,6 @@ open class JKPHPickerCell: JKPHPickerBaseCollectionViewCell {
             mediaTypeButton.isHidden = true
         }
         
-        topShadowView.isHidden = (iCloudButton.isHidden && mediaTypeButton.isHidden)
-        
         selectIconImageView.text = photoItem.isSelected ? "\(photoItem.selectIndex + 1)" : nil
         
         favoriteIconButton.isHidden = !photoItem.asset.isFavorite
@@ -148,12 +145,6 @@ open class JKPHPickerCell: JKPHPickerBaseCollectionViewCell {
         selectCoverView.frame = contentView.bounds
         
         nonselectableCoverView.frame = contentView.bounds
-        
-        bottomShadowView.frame = CGRect(x: 0.0, y: selectIconImageView.frame.minY - 8.0, width: contentView.bounds.width, height: contentView.bounds.height - (selectIconImageView.frame.minY - 8.0))
-        bottomShadowLayer.frame = bottomShadowView.bounds
-        
-        topShadowView.frame = CGRect(x: 0.0, y: 0.0, width: contentView.bounds.width, height: bottomShadowView.bounds.height)
-        topShadowLayer.frame = topShadowView.bounds
         
         selectIconImageView.frame = CGRect(x: contentView.bounds.width - Self.selectIconWH - Self.layoutEdgeInset, y: Self.layoutEdgeInset, width: Self.selectIconWH, height: Self.selectIconWH)
         
@@ -276,8 +267,6 @@ open class JKPHPickerCell: JKPHPickerBaseCollectionViewCell {
         
         contentView.addSubview(imageView)
         contentView.addSubview(selectCoverView)
-        contentView.addSubview(topShadowView)
-        contentView.addSubview(bottomShadowView)
         contentView.addSubview(iCloudButton)
         contentView.addSubview(mediaTypeButton)
         contentView.addSubview(favoriteIconButton)
@@ -295,6 +284,7 @@ open class JKPHPickerCell: JKPHPickerBaseCollectionViewCell {
     /// 初始化UI数据 交给子类重写 super自动调用该方法
     open func initializeUIData() {
         
+        //self.makeShadow(view: selectIconImageView)
     }
     
     // MARK:
@@ -345,6 +335,8 @@ open class JKPHPickerCell: JKPHPickerBaseCollectionViewCell {
         
         button.setBackgroundImage(image, for: .normal)
         
+        self.makeShadow(view: button)
+        
         return button
     }()
     
@@ -362,65 +354,9 @@ open class JKPHPickerCell: JKPHPickerBaseCollectionViewCell {
         button.contentEdgeInsets = .zero
         button.titleLabel?.font = self.mediaTypeFont
         
+        self.makeShadow(view: button)
+        
         return button
-    }()
-    
-    /// topShadowView
-    private lazy var topShadowView: UIImageView = {
-        
-        let topShadowView = UIImageView()
-        
-        topShadowView.layer.addSublayer(topShadowLayer)
-        
-        return topShadowView
-    }()
-    
-    /// topShadowLayer
-    private lazy var topShadowLayer: CAGradientLayer = {
-        
-        let layer = CAGradientLayer()
-        
-        layer.colors = [
-            UIColor.black.withAlphaComponent(0.0).cgColor,
-            UIColor.black.withAlphaComponent(0.15).cgColor,
-            UIColor.black.withAlphaComponent(0.35).cgColor,
-            UIColor.black.withAlphaComponent(0.6).cgColor
-        ]
-        
-        layer.startPoint = CGPoint(x: 0.5, y: 1.0)
-        layer.endPoint = CGPoint(x: 0.5, y: 0.0)
-        layer.locations = [0.15, 0.35, 0.6, 1.0]
-        
-        return layer
-    }()
-    
-    /// bottomShadowView
-    private lazy var bottomShadowView: UIImageView = {
-        
-        let bottomShadowView = UIImageView()
-        
-        bottomShadowView.layer.addSublayer(bottomShadowLayer)
-        
-        return bottomShadowView
-    }()
-    
-    /// bottomShadowLayer
-    private lazy var bottomShadowLayer: CAGradientLayer = {
-        
-        let layer = CAGradientLayer()
-        
-        layer.colors = [
-            UIColor.black.withAlphaComponent(0.0).cgColor,
-            UIColor.black.withAlphaComponent(0.1).cgColor,
-            UIColor.black.withAlphaComponent(0.2).cgColor,
-            UIColor.black.withAlphaComponent(0.3).cgColor
-        ]
-        
-        layer.startPoint = CGPoint(x: 0.5, y: 0.0)
-        layer.endPoint = CGPoint(x: 0.5, y: 1.0)
-        layer.locations = [0.15, 0.35, 0.6, 1.0]
-        
-        return layer
     }()
     
     /// 收藏的图标
@@ -451,6 +387,8 @@ open class JKPHPickerCell: JKPHPickerBaseCollectionViewCell {
         
         button.setBackgroundImage(image, for: .normal)
         
+        self.makeShadow(view: button)
+        
         return button
     }()
     
@@ -463,6 +401,21 @@ open class JKPHPickerCell: JKPHPickerBaseCollectionViewCell {
         label.textColor = .white
         label.textAlignment = .right
         
+        self.makeShadow(view: label)
+        
         return label
     }()
+    
+    private var shadowColor: CGColor {
+        
+        UIColor.black.withAlphaComponent(0.4).cgColor
+    }
+    
+    private func makeShadow(view: UIView) {
+        
+        view.layer.shadowColor = self.shadowColor
+        view.layer.shadowOffset = .zero
+        view.layer.shadowOpacity = 1.0
+        view.layer.shadowRadius = 1.0
+    }
 }

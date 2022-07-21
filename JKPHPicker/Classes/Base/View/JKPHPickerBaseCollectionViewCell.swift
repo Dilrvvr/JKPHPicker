@@ -7,6 +7,7 @@
 
 import UIKit
 import Photos
+import JKSwiftLibrary
 
 open class JKPHPickerBaseCollectionViewCell: UICollectionViewCell {
     
@@ -43,7 +44,7 @@ open class JKPHPickerBaseCollectionViewCell: UICollectionViewCell {
         label.textAlignment = .center
         label.adjustsFontSizeToFitWidth = true
         
-        label.layer.backgroundColor = UIColor.clear.cgColor
+        label.layer.backgroundColor = self.selectIconNormalBackgroundColor.cgColor
         label.layer.cornerRadius = Self.selectIconWH * 0.5
         label.layer.borderWidth = 1.0
         label.layer.borderColor = UIColor.white.cgColor
@@ -67,7 +68,7 @@ open class JKPHPickerBaseCollectionViewCell: UICollectionViewCell {
         
         selectCoverView.isHidden = true
         selectCoverView.isUserInteractionEnabled = false
-        selectCoverView.backgroundColor = UIColor.black.withAlphaComponent(0.4)
+        selectCoverView.backgroundColor = JKSameRGBColor(23.0, 0.55)
         
         return selectCoverView
     }()
@@ -75,13 +76,13 @@ open class JKPHPickerBaseCollectionViewCell: UICollectionViewCell {
     /// 不可选中的遮盖view
     open private(set) lazy var nonselectableCoverView: UIView = {
         
-        let selectCoverView = UIView()
+        let nonselectableCoverView = UIView()
         
-        selectCoverView.isHidden = true
-        selectCoverView.isUserInteractionEnabled = false
-        selectCoverView.backgroundColor = UIColor.black.withAlphaComponent(0.8)
+        nonselectableCoverView.isHidden = true
+        nonselectableCoverView.isUserInteractionEnabled = false
+        nonselectableCoverView.backgroundColor = JKSameRGBColor(49.0, 0.9)
         
-        return selectCoverView
+        return nonselectableCoverView
     }()
     
     // MARK:
@@ -89,7 +90,7 @@ open class JKPHPickerBaseCollectionViewCell: UICollectionViewCell {
     
     open func updateSelectIcon(isSelected: Bool) {
         
-        selectIconImageView.layer.backgroundColor = isSelected ? UIColor.systemBlue.cgColor : UIColor.clear.cgColor
+        selectIconImageView.layer.backgroundColor = isSelected ? UIColor.systemBlue.cgColor : self.selectIconNormalBackgroundColor.cgColor
         selectIconImageView.layer.borderColor = isSelected ? UIColor.clear.cgColor : UIColor.white.cgColor
         
         if hasSelectedCover {
@@ -108,5 +109,13 @@ open class JKPHPickerBaseCollectionViewCell: UICollectionViewCell {
             
             handler(model, button)
         }
+    }
+    
+    // MARK:
+    // MARK: - Private Property
+    
+    private var selectIconNormalBackgroundColor: UIColor {
+        
+        UIColor.black.withAlphaComponent(0.1)
     }
 }
