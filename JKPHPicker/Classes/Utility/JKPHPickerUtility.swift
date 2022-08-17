@@ -33,15 +33,26 @@ public struct JKPHPickerUtility {
     
     static var darkBackgroundColor: UIColor { JKSameRGBColor(53.0) }
     
-    static func calculateBrowserImageSize(_ pixelSize: CGSize, maxSize: CGSize) -> CGSize {
+    static func calculateBrowserImageSize(_ pixelSize: CGSize,
+                                          maxSize: CGSize) -> CGSize {
         
-        var width = maxSize.width
-        
-        if pixelSize.width <= 0.0 ||
-            pixelSize.height <= 0.0 {
+        guard maxSize.width > 0.0,
+              maxSize.height > 0.0 else {
+            
+            let width = min(JKScreenBounds.width, JKScreenBounds.height)
             
             return CGSize(width: width, height: width)
         }
+        
+        guard pixelSize.width > 0.0,
+              pixelSize.height > 0.0 else {
+            
+            let width = min(maxSize.width, maxSize.height)
+            
+            return CGSize(width: width, height: width)
+        }
+        
+        var width = maxSize.width
         
         var height = width * pixelSize.height / pixelSize.width
         

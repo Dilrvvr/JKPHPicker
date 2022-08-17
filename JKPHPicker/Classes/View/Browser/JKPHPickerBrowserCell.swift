@@ -14,11 +14,6 @@ import JKSwiftLibrary
 
 open class JKPHPickerBrowserCell: JKPHPickerBaseCollectionViewCell {
     
-    private static var bottomControlHeight: CGFloat {
-        
-        49.0 + JKBottomSafeAreaInset
-    }
-    
     // MARK:
     // MARK: - Public Property
     
@@ -97,7 +92,7 @@ open class JKPHPickerBrowserCell: JKPHPickerBaseCollectionViewCell {
             
             var isTouching = false
             
-            if let pinchGesture = scrollView.pinchGestureRecognizer,
+            if let pinchGesture = mainScrollView.pinchGestureRecognizer,
                pinchGesture.state == .changed {
                 
                 pinchGesture.state = .cancelled
@@ -147,12 +142,12 @@ open class JKPHPickerBrowserCell: JKPHPickerBaseCollectionViewCell {
         singleTapGesture.isEnabled = true
         doubleTapGesture.isEnabled = true
         
-        scrollView.setZoomScale(1.0, animated: false)
+        mainScrollView.setZoomScale(1.0, animated: false)
         
-        scrollView.minimumZoomScale = JKPHPickerPhotoItem.minimumZoomScale
-        scrollView.maximumZoomScale = photoItem.maximumZoomScale
-        scrollView.contentOffset = .zero
-        scrollView.contentSize = CGSize(width: photoItem.imageSize.width, height: photoItem.imageSize.height)
+        mainScrollView.minimumZoomScale = JKPHPickerPhotoItem.minimumZoomScale
+        mainScrollView.maximumZoomScale = photoItem.maximumZoomScale
+        mainScrollView.contentOffset = .zero
+        mainScrollView.contentSize = CGSize(width: photoItem.imageSize.width, height: photoItem.imageSize.height)
         
         updateVideoPlayButtonHidden(!photoItem.isVideo, animated: true)
         
@@ -199,11 +194,11 @@ open class JKPHPickerBrowserCell: JKPHPickerBaseCollectionViewCell {
     
     private func updateLayout() {
         
-        containerView.frame = CGRect(x: JKPHPickerUtility.browserInset.left, y: 0.0, width: contentView.bounds.width - JKPHPickerUtility.browserInset.left - JKPHPickerUtility.browserInset.right, height: contentView.bounds.height)
+        mainContainerView.frame = CGRect(x: JKPHPickerUtility.browserInset.left, y: 0.0, width: contentView.bounds.width - JKPHPickerUtility.browserInset.left - JKPHPickerUtility.browserInset.right, height: contentView.bounds.height)
         
-        statusBarCoverView.frame = CGRect(x: 0.0, y: 0.0, width: containerView.bounds.width, height: JKStatusBarHeight)
+        statusBarCoverView.frame = CGRect(x: 0.0, y: 0.0, width: mainContainerView.bounds.width, height: JKStatusBarHeight)
         
-        scrollView.frame = containerView.bounds
+        mainScrollView.frame = mainContainerView.bounds
         
         videoPlayButton.frame = CGRect(x: (contentView.bounds.width - 52.0) * 0.5, y: (contentView.bounds.height - 52.0) * 0.5, width: 52.0, height: 52.0)
         
@@ -527,8 +522,8 @@ open class JKPHPickerBrowserCell: JKPHPickerBaseCollectionViewCell {
     
     private func updateScrollViewContentInset() {
         
-        var leftRight: CGFloat = (scrollView.frame.width - imageContainerView.frame.width) * 0.5
-        var topBottom: CGFloat = (scrollView.frame.height - imageContainerView.frame.height) * 0.5
+        var leftRight: CGFloat = (mainScrollView.frame.width - imageContainerView.frame.width) * 0.5
+        var topBottom: CGFloat = (mainScrollView.frame.height - imageContainerView.frame.height) * 0.5
         
         //let contentSizeWidth = leftRight >= 0.0 ? 0.0 : imageContainerView.frame.width
         //let contentSizeHeight = topBottom >= 0.0 ? 0.0 : imageContainerView.frame.height
@@ -536,9 +531,9 @@ open class JKPHPickerBrowserCell: JKPHPickerBaseCollectionViewCell {
         leftRight = max(0.0, leftRight)
         topBottom = max(0.0, topBottom)
         
-        scrollView.contentInset = UIEdgeInsets(top: topBottom, left: leftRight, bottom: topBottom, right: leftRight)
+        mainScrollView.contentInset = UIEdgeInsets(top: topBottom, left: leftRight, bottom: topBottom, right: leftRight)
         
-        //scrollView.contentSize = CGSize(width: contentSizeWidth, height: contentSizeHeight)
+        //mainScrollView.contentSize = CGSize(width: contentSizeWidth, height: contentSizeHeight)
     }
     
     private func revertImageViewCenter() {
@@ -660,7 +655,7 @@ open class JKPHPickerBrowserCell: JKPHPickerBaseCollectionViewCell {
             singleTapGesture.isEnabled = false
             doubleTapGesture.isEnabled = false
             
-            scrollView.isScrollEnabled = false
+            mainScrollView.isScrollEnabled = false
             
         case .changed:
             
@@ -689,7 +684,7 @@ open class JKPHPickerBrowserCell: JKPHPickerBaseCollectionViewCell {
             singleTapGesture.isEnabled = true
             doubleTapGesture.isEnabled = true
             
-            scrollView.isScrollEnabled = true
+            mainScrollView.isScrollEnabled = true
             
             slideAlpha = 1.0
             
@@ -706,7 +701,7 @@ open class JKPHPickerBrowserCell: JKPHPickerBaseCollectionViewCell {
             singleTapGesture.isEnabled = true
             doubleTapGesture.isEnabled = true
             
-            scrollView.isScrollEnabled = true
+            mainScrollView.isScrollEnabled = true
             
             let velocity = gesture.velocity(in: gesture.view)
             
@@ -757,7 +752,7 @@ open class JKPHPickerBrowserCell: JKPHPickerBaseCollectionViewCell {
     /// 单击状态栏位置
     @objc private func singleTapStatusBarLocationAction(gesture: UITapGestureRecognizer) {
         
-        scrollView.setContentOffset(CGPoint(x: scrollView.contentOffset.x, y: -scrollView.contentInset.top), animated: true)
+        mainScrollView.setContentOffset(CGPoint(x: mainScrollView.contentOffset.x, y: -mainScrollView.contentInset.top), animated: true)
     }
     
     /// 单击
@@ -779,23 +774,23 @@ open class JKPHPickerBrowserCell: JKPHPickerBaseCollectionViewCell {
         let point = imageContainerView.convert(location, from: gesture.view)
         
         // 双击缩小
-        if (scrollView.zoomScale > 1.0) {
+        if (mainScrollView.zoomScale > 1.0) {
             
-            scrollView.setZoomScale(1.0, animated: true)
+            mainScrollView.setZoomScale(1.0, animated: true)
             
             return
         }
         
         // 双击放大
-        let maxZoomScale = scrollView.maximumZoomScale
+        let maxZoomScale = mainScrollView.maximumZoomScale
         
         let rect: CGRect = CGRect(x: point.x - 5.0, y: point.y - 5.0, width: 10.0, height: 10.0)
         
-        scrollView.maximumZoomScale = JKPHPickerPhotoItem.firstZoomScale
+        mainScrollView.maximumZoomScale = JKPHPickerPhotoItem.firstZoomScale
         
-        scrollView.zoom(to: rect, animated: true)
+        mainScrollView.zoom(to: rect, animated: true)
         
-        scrollView.maximumZoomScale = maxZoomScale
+        mainScrollView.maximumZoomScale = maxZoomScale
     }
     
     // MARK:
@@ -821,21 +816,21 @@ open class JKPHPickerBrowserCell: JKPHPickerBaseCollectionViewCell {
         
         singleTapGesture.require(toFail: doubleTapGesture)
         
-        containerView.addGestureRecognizer(panGesture)
-        containerView.addGestureRecognizer(singleTapGesture)
-        containerView.addGestureRecognizer(doubleTapGesture)
+        mainContainerView.addGestureRecognizer(panGesture)
+        mainContainerView.addGestureRecognizer(singleTapGesture)
+        mainContainerView.addGestureRecognizer(doubleTapGesture)
     }
     
     /// 创建UI 交给子类重写 super自动调用该方法
     open func createUI() {
         
-        contentView.insertSubview(containerView, at: 0)
+        contentView.insertSubview(mainContainerView, at: 0)
         contentView.addSubview(videoPlayButton)
         
-        containerView.addSubview(scrollView)
-        containerView.addSubview(statusBarCoverView)
+        mainContainerView.addSubview(mainScrollView)
+        mainContainerView.addSubview(statusBarCoverView)
         
-        scrollView.addSubview(imageContainerView)
+        mainScrollView.addSubview(imageContainerView)
         
         imageContainerView.addSubview(imageView)
         imageContainerView.addSubview(livePhotoView)
@@ -903,16 +898,16 @@ open class JKPHPickerBrowserCell: JKPHPickerBaseCollectionViewCell {
         return panGesture
     }()
     
-    /// containerView
-    private lazy var containerView: UIView = {
+    /// mainContainerView
+    private lazy var mainContainerView: UIView = {
         
-        let containerView = UIView()
+        let mainContainerView = UIView()
         
-        return containerView
+        return mainContainerView
     }()
     
-    /// scrollView
-    private lazy var scrollView: UIScrollView = {
+    /// mainScrollView
+    private lazy var mainScrollView: UIScrollView = {
         
         let scrollView = UIScrollView()
         
@@ -1005,9 +1000,9 @@ open class JKPHPickerBrowserCell: JKPHPickerBaseCollectionViewCell {
     /// imageContainerView
     private lazy var imageContainerView: UIView = {
         
-        let view = UIView()
+        let imageContainerView = UIView()
         
-        return view
+        return imageContainerView
     }()
     
     /// statusBarCoverView
@@ -1069,10 +1064,10 @@ extension JKPHPickerBrowserCell: UIGestureRecognizerDelegate {
     
     open func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         
-        if otherGestureRecognizer == scrollView.pinchGestureRecognizer { return false }
+        if otherGestureRecognizer == mainScrollView.pinchGestureRecognizer { return false }
         
         if otherGestureRecognizer.isKind(of: UIPanGestureRecognizer.self) &&
-            otherGestureRecognizer != scrollView.panGestureRecognizer{
+            otherGestureRecognizer != mainScrollView.panGestureRecognizer{
             
             return false
         }

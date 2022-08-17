@@ -150,7 +150,12 @@ open class JKPHPickerBrowserView: JKPHPickerBaseView {
         self.contentView.addSubview(imageView)
         
         let imageSize = JKPHPickerUtility.calculateBrowserImageSize(photoItem.pixelSize, maxSize: JKKeyWindow.bounds.size)
-        let targetFrame = CGRect(x: (bounds.width - imageSize.width) * 0.5, y: (bounds.height - imageSize.height) * 0.5, width: imageSize.width, height: imageSize.height)
+        
+        var targetY: CGFloat = 0.0
+        if imageSize.height < bounds.height {
+            targetY = (bounds.height - imageSize.height) * 0.5
+        }
+        let targetFrame = CGRect(x: (bounds.width - imageSize.width) * 0.5, y: targetY, width: imageSize.width, height: imageSize.height)
         
         setNeedsLayout()
         layoutIfNeeded()
