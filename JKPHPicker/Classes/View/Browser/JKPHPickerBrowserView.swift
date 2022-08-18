@@ -77,7 +77,7 @@ public protocol JKPHPickerBrowserViewLifeDelegate: NSObjectProtocol {
 
 open class JKPHPickerBrowserView: JKPHPickerBaseView {
     
-    public static let selectIconWH: CGFloat = 20.0
+    public static let selectIconWH: CGFloat = 21.0
     
     // MARK:
     // MARK: - Public Property
@@ -106,10 +106,10 @@ open class JKPHPickerBrowserView: JKPHPickerBaseView {
     }
     
     open func solve(photoItem: JKPHPickerPhotoItem,
-                    datasource: JKPHPickerBrowserViewDataSource?,
+                    dataSource: JKPHPickerBrowserViewDataSource?,
                     delegate: JKPHPickerBrowserViewDelegate?) {
         
-        guard let realDataSource = datasource,
+        guard let realDataSource = dataSource,
               let indexPath = realDataSource.browserView(self, indexPathFor: photoItem) else {
                   
                   return
@@ -144,7 +144,7 @@ open class JKPHPickerBrowserView: JKPHPickerBaseView {
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         
-        imageView.image = datasource?.browserView(self, thumbnailImageFor: photoItem) ?? JKPHPickerUtility.Placeholder.darkGray
+        imageView.image = realDataSource.browserView(self, thumbnailImageFor: photoItem) ?? JKPHPickerUtility.Placeholder.darkGray
         
         imageView.frame = fromFrame
         self.contentView.addSubview(imageView)
@@ -259,10 +259,7 @@ open class JKPHPickerBrowserView: JKPHPickerBaseView {
         
         editButton.frame = CGRect(x: 5.0, y: 0.0 * 0.5, width: 60.0, height: barContentView.bounds.height)
         
-        selectIconImageView.frame = CGRect(x: barContentView.bounds.width - 15.0 - Self.selectIconWH, y: (barContentView.bounds.height - Self.selectIconWH) * 0.5, width: Self.selectIconWH, height: Self.selectIconWH)
-        
-        selectButton.frame = CGRect(x: 0.0, y: 0.0, width: Self.selectIconWH + 30.0, height: barContentView.bounds.height)
-        selectButton.center = selectIconImageView.center
+        // TODO: - JKTODO <#注释#>
     }
     
     // MARK:
@@ -527,14 +524,27 @@ open class JKPHPickerBrowserView: JKPHPickerBaseView {
         
         contentView.insertSubview(collectionView, at: 0)
         
+        navigationBarView.contentView.addSubview(selectButton)
+        navigationBarView.contentView.addSubview(selectIconImageView)
+        
         bottomControlView.contentView.addSubview(editButton)
-        bottomControlView.contentView.addSubview(selectButton)
-        bottomControlView.contentView.addSubview(selectIconImageView)
     }
     
     /// 布局UI 交给子类重写 super自动调用该方法
     open override func layoutUI() {
         super.layoutUI()
+        
+        navigationBarView.didLayoutSubviewsHandler = { [weak self] barView in
+            
+            guard let _ = self else { return }
+            
+            let barContentView = barView.contentView
+            
+            self?.selectIconImageView.frame = CGRect(x: barContentView.bounds.width - 15.0 - Self.selectIconWH, y: (barContentView.bounds.height - Self.selectIconWH) * 0.5, width: Self.selectIconWH, height: Self.selectIconWH)
+            
+            self?.selectButton.frame = CGRect(x: 0.0, y: 0.0, width: Self.selectIconWH + 30.0, height: barContentView.bounds.height)
+            self?.selectButton.center = self!.selectIconImageView.center
+        }
         
         bottomControlView.didLayoutSubviewsHandler = { [weak self] _ in
             
@@ -561,17 +571,14 @@ open class JKPHPickerBrowserView: JKPHPickerBaseView {
         navigationBarView.titleLabel.font = UIFont.systemFont(ofSize: 13.0)
         navigationBarView.titleLabel.textColor = .white
         
-        navigationBarView.rightButton.isUserInteractionEnabled = false
-        navigationBarView.rightButton.contentHorizontalAlignment = .right
-        navigationBarView.rightButton.setTitleColor(.white, for: .normal)
-        navigationBarView.rightButton.titleLabel?.adjustsFontSizeToFitWidth = true
-        navigationBarView.rightButton.titleLabel?.font = UIFont.systemFont(ofSize: 13.0)
         flowLayout.scrollDirection = .horizontal
         flowLayout.minimumLineSpacing = 0.0
         flowLayout.minimumInteritemSpacing = 0.0
         
         collectionView.isPagingEnabled = true
         collectionView.scrollsToTop = false
+        collectionView.alwaysBounceHorizontal = true
+        collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
     }
     
@@ -591,22 +598,9 @@ open class JKPHPickerBrowserView: JKPHPickerBaseView {
                 return
             }
             
-            navigationBarView.rightButton.isHidden = true
-            
             updateNavigationTitle(photoItem: newValue)
             
             if let item = newValue {
-                
-                if let realDataSource = dataSource,
-                   realDataSource.isPreviewSelectedItems(in: self) {
-                    
-                    navigationBarView.rightButton.isHidden = false
-                    navigationBarView.setNeedsLayout()
-                    
-                    let itemCount = realDataSource.browserView(self, photoItemArrayIn: 0).count
-                    
-                    navigationBarView.rightButton.setTitle("\(currentIndex + 1)/\(itemCount)", for: .normal)
-                }
                 
                 if configuration.isShowsOriginalButton {
                     
@@ -952,17 +946,17 @@ extension JKPHPickerBrowserView {
         imageView.frame = self.bounds
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.image = self.jk.snapshot
+        imageView.image = self.contentView.jk.snapshot
         addSubview(imageView)
         
-        collectionView.isHidden = true
+        contentView.isHidden = true
         
         UIView.animate(withDuration: 0.25) {
             
             // TODO: - JKTODO <#注释#> 生硬
             
             imageView.alpha = 0.0
-            //imageView.transform = CGAffineTransform(translationX: 0.0, y: imageView.bounds.height)//CGAffineTransform(scaleX: 1.5, y: 1.5)
+            imageView.transform = CGAffineTransform(translationX: 0.0, y: imageView.bounds.height).scaledBy(x: 0.25, y: 0.25)//CGAffineTransform(scaleX: 1.5, y: 1.5)
             
             self.alpha = 0.0
             

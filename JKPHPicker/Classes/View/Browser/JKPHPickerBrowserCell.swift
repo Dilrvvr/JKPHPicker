@@ -116,6 +116,7 @@ open class JKPHPickerBrowserCell: JKPHPickerBaseCollectionViewCell {
             
             reload(with: item, isRequestImage: false)
             
+            return;
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { [weak self] in
                 
                 guard let _ = self,
@@ -147,7 +148,7 @@ open class JKPHPickerBrowserCell: JKPHPickerBaseCollectionViewCell {
         mainScrollView.minimumZoomScale = JKPHPickerPhotoItem.minimumZoomScale
         mainScrollView.maximumZoomScale = photoItem.maximumZoomScale
         mainScrollView.contentOffset = .zero
-        mainScrollView.contentSize = CGSize(width: photoItem.imageSize.width, height: photoItem.imageSize.height)
+        mainScrollView.contentSize = CGSize(width: photoItem.imageViewSize.width, height: photoItem.imageViewSize.height)
         
         updateVideoPlayButtonHidden(!photoItem.isVideo, animated: true)
         
@@ -210,12 +211,12 @@ open class JKPHPickerBrowserCell: JKPHPickerBaseCollectionViewCell {
         }
         
         if !previousImageViewSize.equalTo(.zero) &&
-            previousImageViewSize.equalTo(item.imageSize) {
+            previousImageViewSize.equalTo(item.imageViewSize) {
             
             return
         }
         
-        previousImageViewSize = item.imageSize
+        previousImageViewSize = item.imageViewSize
         
         updateImageLayout()
         
@@ -226,7 +227,7 @@ open class JKPHPickerBrowserCell: JKPHPickerBaseCollectionViewCell {
         
         guard let photoItem = model else { return }
         
-        let imageViewSize = photoItem.imageSize
+        let imageViewSize = photoItem.imageViewSize
         
         imageContainerView.frame = CGRect(x: 0.0, y: 0.0, width: imageViewSize.width, height: imageViewSize.height)
         

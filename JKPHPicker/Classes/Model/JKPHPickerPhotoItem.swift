@@ -105,12 +105,12 @@ open class JKPHPickerPhotoItem: NSObject {
     /// 最大缩放比例
     open var maximumZoomScale: CGFloat {
         
-        if imageSize.width <= 0.0 {
+        if imageViewSize.width <= 0.0 {
             
             return Self.firstZoomScale
         }
         
-        let scale = pixelSize.width / imageSize.width * 2.0
+        let scale = pixelSize.width / imageViewSize.width * 2.0
         
         return max(scale, Self.firstZoomScale)
     }
@@ -143,7 +143,7 @@ open class JKPHPickerPhotoItem: NSObject {
     open var isLivePhoto: Bool { mediaType == .livePhoto }
     
     /// 图片尺寸
-    open var imageSize: CGSize {
+    open var imageViewSize: CGSize {
         
         let imageViewSize = JKPHPickerUtility.calculateBrowserImageSize(pixelSize, maxSize: JKKeyWindow.bounds.size)
         
