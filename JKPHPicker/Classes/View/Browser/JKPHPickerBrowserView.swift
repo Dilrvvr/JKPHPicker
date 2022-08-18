@@ -843,30 +843,37 @@ extension JKPHPickerBrowserView {
         
         showBottomControl(true)
     }
+}
+
+// MARK:
+// MARK: - Dismiss
+
+extension JKPHPickerBrowserView {
     
     private func preDismiss() {
         
-        if let _ = delegate {
+        if let delegate = delegate {
             
-            delegate?.browserViewWillDismiss(self)
+            delegate.browserViewWillDismiss(self)
         }
         
-        if let _ = lifeDelegate {
+        if let lifeDelegate = lifeDelegate {
             
-            lifeDelegate?.browserViewWillDismiss(self)
+            lifeDelegate.browserViewWillDismiss(self)
         }
     }
     
     /// 退出
-    private func dismiss(photoItem: JKPHPickerPhotoItem, browserCell: JKPHPickerBrowserCell) {
+    private func dismiss(photoItem: JKPHPickerPhotoItem,
+                         browserCell: JKPHPickerBrowserCell) {
         
         guard let _ = dataSource,
               let _ = browserCell.imageView.superview else {
-                  
-                  normalDismiss()
-                  
-                  return
-              }
+            
+            normalDismiss()
+            
+            return
+        }
         
         // dismiss动画的目标rect
         var toRect = dataSource!.browserView(self, dismissTargetRectFor: photoItem)
@@ -890,12 +897,13 @@ extension JKPHPickerBrowserView {
             toRect.origin.y = containerView.bounds.minY - toRect.height
         }
         
-        preDismiss()
+        let tempContainerView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: containerView.bounds.width, height: containerView.bounds.height))
+        containerView.addSubview(tempContainerView)
         
-        let tempBackgroundView = UIView()
+        let tempBackgroundView = UIView(frame: tempContainerView.bounds)
         tempBackgroundView.alpha = backgroundView.alpha
         tempBackgroundView.backgroundColor = backgroundView.backgroundColor
-        containerView.addSubview(tempBackgroundView)
+        tempContainerView.addSubview(tempBackgroundView)
         
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -908,6 +916,8 @@ extension JKPHPickerBrowserView {
         
         isHidden = true
         
+        preDismiss()
+        
         UIView.animate(withDuration: 0.35, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.1, options: .curveEaseIn) {
             
             imageView.frame = toRect
@@ -916,34 +926,35 @@ extension JKPHPickerBrowserView {
             
         } completion: { _ in
             
+            /*
             UIView.transition(with: imageView, duration: 0.25, options: .transitionCrossDissolve) {
-                
+
                 imageView.alpha = 0.0
-                
+
             } completion: { _ in
-                
+
                 imageView.removeFromSuperview()
             }
+             // */
             
-            tempBackgroundView.removeFromSuperview()
+            imageView.removeFromSuperview()
+            
+            tempContainerView.removeFromSuperview()
+            
+            if let lifeDelegate = self.lifeDelegate {
+                
+                lifeDelegate.browserViewDidDismiss(self)
+            }
             
             self.removeFromSuperview()
-            
-            if let _ = self.lifeDelegate {
-                
-                self.lifeDelegate!.browserViewDidDismiss(self)
-            }
         }
     }
     
     /// 普通方式退出
     private func normalDismiss() {
         
-        preDismiss()
+        let imageView = UIImageView(frame: self.bounds)
         
-        let imageView = UIImageView()
-        
-        imageView.frame = self.bounds
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.image = self.contentView.jk.snapshot
@@ -951,24 +962,24 @@ extension JKPHPickerBrowserView {
         
         contentView.isHidden = true
         
-        UIView.animate(withDuration: 0.25) {
+        preDismiss()
+        
+        UIView.animate(withDuration: 0.35, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.1, options: .curveEaseIn) {
             
-            // TODO: - JKTODO <#注释#> 生硬
+            imageView.transform = CGAffineTransform(translationX: 0.0, y: imageView.bounds.height).scaledBy(x: 0.25, y: 0.25)
             
-            imageView.alpha = 0.0
-            imageView.transform = CGAffineTransform(translationX: 0.0, y: imageView.bounds.height).scaledBy(x: 0.25, y: 0.25)//CGAffineTransform(scaleX: 1.5, y: 1.5)
-            
-            self.alpha = 0.0
+            self.backgroundView.alpha = 0.0
             
         } completion: { _ in
             
             imageView.removeFromSuperview()
-            self.removeFromSuperview()
             
-            if let _ = self.lifeDelegate {
+            if let lifeDelegate = self.lifeDelegate {
                 
-                self.lifeDelegate!.browserViewDidDismiss(self)
+                lifeDelegate.browserViewDidDismiss(self)
             }
+            
+            self.removeFromSuperview()
         }
     }
 }
