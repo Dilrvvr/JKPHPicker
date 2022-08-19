@@ -918,7 +918,6 @@ extension JKPHPickerBrowserView {
             
         } completion: { _ in
             
-            /*
             UIView.transition(with: imageView, duration: 0.15, options: .transitionCrossDissolve) {
 
                 imageView.alpha = 0.0
@@ -927,9 +926,6 @@ extension JKPHPickerBrowserView {
 
                 imageView.removeFromSuperview()
             }
-             // */
-            
-            imageView.removeFromSuperview()
             
             tempContainerView.removeFromSuperview()
             
