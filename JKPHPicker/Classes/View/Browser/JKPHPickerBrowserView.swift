@@ -253,13 +253,12 @@ open class JKPHPickerBrowserView: JKPHPickerBaseView {
         }
     }
     
-    private func layoutBottomControlViewUI() {
+    override func layoutBottomControlViewUI() {
+        super.layoutBottomControlViewUI()
         
         let barContentView = bottomControlView.contentView
         
         editButton.frame = CGRect(x: 5.0, y: 0.0 * 0.5, width: 60.0, height: barContentView.bounds.height)
-        
-        // TODO: - JKTODO <#注释#>
     }
     
     // MARK:
@@ -544,13 +543,6 @@ open class JKPHPickerBrowserView: JKPHPickerBaseView {
             
             self?.selectButton.frame = CGRect(x: 0.0, y: 0.0, width: Self.selectIconWH + 30.0, height: barContentView.bounds.height)
             self?.selectButton.center = self!.selectIconImageView.center
-        }
-        
-        bottomControlView.didLayoutSubviewsHandler = { [weak self] _ in
-            
-            guard let _ = self else { return }
-            
-            self?.layoutBottomControlViewUI()
         }
     }
     
@@ -927,7 +919,7 @@ extension JKPHPickerBrowserView {
         } completion: { _ in
             
             /*
-            UIView.transition(with: imageView, duration: 0.25, options: .transitionCrossDissolve) {
+            UIView.transition(with: imageView, duration: 0.15, options: .transitionCrossDissolve) {
 
                 imageView.alpha = 0.0
 

@@ -116,6 +116,9 @@ open class JKPHPickerConfiguration: NSObject {
     /// 是否可以编辑 默认false
     open var isEditable = false
     
+    /// 完成按钮文字
+    open var completeButtonTitle = "完成"
+    
     open var editConfiguration = JKPHPickerEditConfiguration(clipRatio: .zero, isClipCircle: false)
     
     /// 缩略图缓存

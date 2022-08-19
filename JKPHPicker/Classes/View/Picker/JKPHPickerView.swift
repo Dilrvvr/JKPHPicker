@@ -37,6 +37,18 @@ open class JKPHPickerView: JKPHPickerBaseView {
     
     open private(set) var selectedPhotoItemArray = [JKPHPickerPhotoItem]()
     
+    open weak var browserView: JKPHPickerBrowserView? {
+        
+        didSet {
+            
+            synchronizeBrowserCompleteButton()
+            
+            guard let browserView = browserView else { return }
+            
+            browserView.completeButton.addTarget(self, action: #selector(completeButtonClick(button:)), for: .touchUpInside)
+        }
+    }
+    
     // MARK:
     // MARK: - Public Methods
     
@@ -132,18 +144,13 @@ open class JKPHPickerView: JKPHPickerBaseView {
         updateCompleteButtonLayout()
     }
     
-    private func layoutBottomControlViewUI() {
+    override func layoutBottomControlViewUI() {
+        super.layoutBottomControlViewUI()
         
         let barContentView = bottomControlView.contentView
+        let buttonSize = completeButtonSize
         
-        var completeButtonSize = completeButton.sizeThatFits(CGSize(width: CGFloat.infinity, height: 44.0))
-        completeButtonSize.width += 16.0
-        completeButtonSize.width = max(56.0, completeButtonSize.width)
-        completeButtonSize.height = min(barContentView.bounds.height - 6.0, 32.0)
-        
-        completeButton.frame = CGRect(x: barContentView.bounds.width - 15.0 - completeButtonSize.width, y: (barContentView.bounds.height - completeButtonSize.height) * 0.5, width: completeButtonSize.width, height: completeButtonSize.height)
-        
-        previewButton.frame = CGRect(x: 15.0, y: (barContentView.bounds.height - completeButtonSize.height) * 0.5, width: completeButtonSize.width, height: completeButtonSize.height)
+        previewButton.frame = CGRect(x: 15.0, y: (barContentView.bounds.height - buttonSize.height) * 0.5, width: buttonSize.width, height: buttonSize.height)
     }
     
     private func updateCompleteButtonLayout() {
@@ -331,6 +338,7 @@ open class JKPHPickerView: JKPHPickerBaseView {
         
         // TODO: - JKTODO <#注释#>
         updateBottomButtonUI()
+        synchronizeBrowserCompleteButton()
         checkUpdateNextSelectTypes()
     }
     
@@ -425,9 +433,19 @@ open class JKPHPickerView: JKPHPickerBaseView {
         }
     }
     
+    private func synchronizeBrowserCompleteButton() {
+        
+        guard let browserView = browserView else { return }
+        
+        browserView.completeButton.isEnabled = completeButton.isEnabled
+        browserView.completeButton.setTitle(completeButton.currentTitle, for: .normal)
+        
+        browserView.layoutBottomControlViewUI()
+    }
+    
     private func resetCompleteButtonUI() {
         
-        completeButton.setTitle("完成", for: .normal)
+        completeButton.setTitle(configuration.completeButtonTitle, for: .normal)
         completeButton.isEnabled = false
         
         updateCompleteButtonLayout()
@@ -453,7 +471,7 @@ open class JKPHPickerView: JKPHPickerBaseView {
         
         completeButton.isEnabled = (selectedPhotoItemArray.count > 0)
         
-        var buttonTitle = "完成"
+        var buttonTitle = configuration.completeButtonTitle
         
         if configuration.isSelectVideoSimultaneously { // 照片/视频可以同时选择
             
@@ -749,19 +767,12 @@ open class JKPHPickerView: JKPHPickerBaseView {
         limitTipView.addSubview(limitJumpButton)
         
         bottomControlView.contentView.addSubview(previewButton)
-        bottomControlView.contentView.addSubview(completeButton)
     }
     
     /// 布局UI 交给子类重写 super自动调用该方法
     open override func layoutUI() {
         super.layoutUI()
         
-        bottomControlView.didLayoutSubviewsHandler = { [weak self] barView in
-            
-            guard let _ = self else { return }
-            
-            self?.layoutBottomControlViewUI()
-        }
     }
     
     /// 初始化UI数据 交给子类重写 super自动调用该方法
@@ -786,6 +797,8 @@ open class JKPHPickerView: JKPHPickerBaseView {
         collectionView.scrollsToTop = true
         collectionView.alwaysBounceVertical = true
         collectionView.showsHorizontalScrollIndicator = false
+        
+        completeButton.addTarget(self, action: #selector(completeButtonClick(button:)), for: .touchUpInside)
     }
     
     // MARK:
@@ -888,25 +901,6 @@ open class JKPHPickerView: JKPHPickerBaseView {
         previewButton.addTarget(self, action: #selector(previewButtonClick(button:)), for: .touchUpInside)
         
         return previewButton
-    }()
-    
-    /// completeButton
-    private lazy var completeButton: UIButton = {
-        
-        let completeButton = UIButton(type: .custom)
-        
-        completeButton.backgroundColor = UIColor.systemBlue
-        completeButton.isEnabled = false
-        completeButton.layer.cornerRadius = 3.0
-        completeButton.titleLabel?.font = UIFont.systemFont(ofSize: 15.0)
-        completeButton.setTitleColor(.white, for: .normal)
-        completeButton.setTitleColor(UIColor.white.withAlphaComponent(0.5), for: .highlighted)
-        completeButton.setTitleColor(UIColor.white.withAlphaComponent(0.4), for: .disabled)
-        completeButton.setTitle("完成", for: .normal)
-        
-        completeButton.addTarget(self, action: #selector(completeButtonClick(button:)), for: .touchUpInside)
-        
-        return completeButton
     }()
     
     /// albumView
@@ -1225,6 +1219,7 @@ extension JKPHPickerView {
         checkUpdateSelectStatus(photoItem: photoItem)
         
         updateBottomButtonUI()
+        synchronizeBrowserCompleteButton()
         
         checkUpdateNextSelectTypes()
     }

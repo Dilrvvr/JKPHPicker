@@ -482,6 +482,7 @@ class ViewController: UIViewController {
         configuration.isShowCameraItem = true
         configuration.isShowsOriginalButton = true
         configuration.isObservePhotoLibraryChange = true
+        configuration.completeButtonTitle = "发送"
         
         /*
         configuration.columnCountHandler = {

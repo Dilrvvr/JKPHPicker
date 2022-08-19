@@ -203,6 +203,8 @@ extension JKPHPickerViewController: JKPHPickerViewDelegate {
         browserView = realBrowserView
         
         browserView?.solve(photoItem: photoItem, dataSource: pickerView, delegate: pickerView)
+        
+        pickerView.browserView = browserView
     }
 }
 

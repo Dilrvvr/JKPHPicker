@@ -271,7 +271,14 @@ open class JKPHPickerBaseView: JKPHPickerUIView {
     // MARK:
     // MARK: - Private Methods
     
-    
+    func layoutBottomControlViewUI() {
+        
+        let barContentView = bottomControlView.contentView
+        
+        let buttonSize = completeButtonSize
+        
+        completeButton.frame = CGRect(x: barContentView.bounds.width - 15.0 - buttonSize.width, y: (barContentView.bounds.height - buttonSize.height) * 0.5, width: buttonSize.width, height: buttonSize.height)
+    }
     
     // MARK:
     // MARK: - Private Selector
@@ -305,6 +312,7 @@ open class JKPHPickerBaseView: JKPHPickerUIView {
         addSubview(bottomControlView)
         addSubview(navigationBarView)
         
+        bottomControlView.contentView.addSubview(completeButton)
         bottomControlView.contentView.addSubview(originalImageButton)
     }
     
@@ -312,6 +320,12 @@ open class JKPHPickerBaseView: JKPHPickerUIView {
     open override func layoutUI() {
         super.layoutUI()
         
+        bottomControlView.didLayoutSubviewsHandler = { [weak self] barView in
+            
+            guard let _ = self else { return }
+            
+            self?.layoutBottomControlViewUI()
+        }
     }
     
     /// 初始化UI数据 交给子类重写 super自动调用该方法
@@ -319,12 +333,39 @@ open class JKPHPickerBaseView: JKPHPickerUIView {
         super.initializeUIData()
         
         originalImageButton.isHidden = !configuration.isShowsOriginalButton
+        
+        completeButton.setTitle(configuration.completeButtonTitle, for: .normal)
     }
     
     // MARK:
     // MARK: - Private Property
     
+    var completeButtonSize: CGSize {
+        
+        var buttonSize = completeButton.sizeThatFits(CGSize(width: CGFloat.infinity, height: 44.0))
+        
+        buttonSize.width += 16.0
+        buttonSize.width = max(56.0, buttonSize.width)
+        buttonSize.height = min(bottomControlView.contentView.bounds.height - 6.0, 32.0)
+        
+        return buttonSize
+    }
     
+    /// completeButton
+    private(set) lazy var completeButton: UIButton = {
+        
+        let completeButton = UIButton(type: .custom)
+        
+        completeButton.backgroundColor = UIColor.systemBlue
+        completeButton.isEnabled = false
+        completeButton.layer.cornerRadius = 3.0
+        completeButton.titleLabel?.font = UIFont.systemFont(ofSize: 15.0)
+        completeButton.setTitleColor(.white, for: .normal)
+        completeButton.setTitleColor(UIColor.white.withAlphaComponent(0.5), for: .highlighted)
+        completeButton.setTitleColor(UIColor.white.withAlphaComponent(0.4), for: .disabled)
+        
+        return completeButton
+    }()
 }
 
 // MARK:
