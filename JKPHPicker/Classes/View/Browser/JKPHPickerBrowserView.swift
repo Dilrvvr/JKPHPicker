@@ -600,15 +600,15 @@ open class JKPHPickerBrowserView: JKPHPickerBaseView {
                 }
                 
                 selectButton.isHidden = !item.isSelectable
-                selectIconImageView.isHidden = selectButton.isHidden
                 
             } else {
                 
                 originalImageButton.isHidden = true
                 
                 selectButton.isHidden = true
-                selectIconImageView.isHidden = true
             }
+            
+            selectIconImageView.alpha = selectButton.isHidden ? 0.1 : 1.0
             
             updateSelectIcon(isSelected: newValue?.isSelected ?? false)
         }
