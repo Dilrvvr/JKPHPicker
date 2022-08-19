@@ -342,11 +342,11 @@ open class JKPHPickerBaseView: JKPHPickerUIView {
     
     var completeButtonSize: CGSize {
         
-        var buttonSize = completeButton.sizeThatFits(CGSize(width: CGFloat.infinity, height: 44.0))
+        var buttonSize = self.completeButton.sizeThatFits(CGSize(width: CGFloat.infinity, height: 44.0))
         
         buttonSize.width += 16.0
         buttonSize.width = max(56.0, buttonSize.width)
-        buttonSize.height = min(bottomControlView.contentView.bounds.height - 6.0, 32.0)
+        buttonSize.height = min(self.bottomControlView.contentView.bounds.height - 6.0, 32.0)
         
         return buttonSize
     }
