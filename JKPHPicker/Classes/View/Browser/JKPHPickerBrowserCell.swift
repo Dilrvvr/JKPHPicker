@@ -787,7 +787,14 @@ open class JKPHPickerBrowserCell: JKPHPickerBaseCollectionViewCell {
         
         let rect: CGRect = CGRect(x: point.x - 5.0, y: point.y - 5.0, width: 10.0, height: 10.0)
         
-        mainScrollView.maximumZoomScale = JKPHPickerPhotoItem.firstZoomScale
+        if let photoItem = model {
+            
+            mainScrollView.maximumZoomScale = photoItem.firstZoomScale
+            
+        } else {
+            
+            mainScrollView.maximumZoomScale = JKPHPickerPhotoItem.firstMinZoomScale
+        }
         
         mainScrollView.zoom(to: rect, animated: true)
         

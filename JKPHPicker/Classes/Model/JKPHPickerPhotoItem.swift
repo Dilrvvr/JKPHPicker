@@ -18,7 +18,7 @@ open class JKPHPickerPhotoItem: NSObject {
     public static let minimumZoomScale: CGFloat = 1.0
     
     /// 首次缩放比例
-    public static let firstZoomScale: CGFloat = 2.0
+    public static let firstMinZoomScale: CGFloat = 2.0
     
     // MARK:
     // MARK: - Init Function
@@ -107,12 +107,43 @@ open class JKPHPickerPhotoItem: NSObject {
         
         if imageViewSize.width <= 0.0 {
             
-            return Self.firstZoomScale
+            return Self.firstMinZoomScale
         }
         
-        let scale = pixelSize.width / imageViewSize.width * 2.0
+        var scale = pixelSize.width / imageViewSize.width * 2.0
         
-        return max(scale, Self.firstZoomScale)
+        scale = max(scale, Self.firstMinZoomScale)
+        
+        return scale
+    }
+    
+    open var firstZoomScale: CGFloat {
+        
+        let viewSize = imageViewSize
+        let maxSize = JKKeyWindow.bounds.size
+        
+        let minScale = Self.firstMinZoomScale
+        
+        var scale: CGFloat = minScale
+        
+        if viewSize.width < maxSize.width {
+            
+            scale = maxSize.width / viewSize.width
+            
+        } else if viewSize.height < maxSize.height {
+            
+            scale = maxSize.height / viewSize.height
+        }
+        
+        if !JKisPortrait ||
+            viewSize.width >= viewSize.height {
+            
+            scale = min(scale, minScale)
+        }
+        
+        scale = min(scale, maximumZoomScale)
+        
+        return scale
     }
     
     // MARK:
