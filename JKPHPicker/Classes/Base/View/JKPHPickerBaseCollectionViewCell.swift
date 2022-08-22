@@ -12,10 +12,10 @@ import JKSwiftLibrary
 open class JKPHPickerBaseCollectionViewCell: UICollectionViewCell {
     
     /// 选中图标的宽高
-    public static let selectIconWH: CGFloat = 22.0
+    open class var selectIconWH: CGFloat { 22.0 }
     
     /// 选中按钮的宽高
-    public static let selectButtonSize: CGSize = CGSize(width: 44.0, height: 44.0)
+    open class var selectButtonSize: CGSize { CGSize(width: 44.0, height: 44.0) }
     
     // MARK:
     // MARK: - Public Property
@@ -33,6 +33,11 @@ open class JKPHPickerBaseCollectionViewCell: UICollectionViewCell {
     open var hasSelectedCover: Bool { false }
     
     open var selectActionHandler: ((_ model: JKPHPickerPhotoItem?, _ button: UIButton) -> Void)?
+    
+    open var selectIconNormalBackgroundColor: UIColor {
+        
+        UIColor.black.withAlphaComponent(0.1)
+    }
     
     /// selectIconLabel
     open private(set) lazy var selectIconLabel: UILabel = {
@@ -111,11 +116,76 @@ open class JKPHPickerBaseCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    
+    // MARK:
+    // MARK: - Public Property
+    
+    
+    
+    // MARK:
+    // MARK: - Public Methods
+    
+    
+    
+    // MARK:
+    // MARK: - Override
+    
+    public override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        initialization()
+    }
+    
+    public required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        
+        initialization()
+    }
+    
+    // MARK:
+    // MARK: - Private Methods
+    
+    
+    
+    // MARK:
+    // MARK: - Private Selector
+    
+    
+    
+    // MARK:
+    // MARK: - Initialization & Build UI
+    
+    /// 初始化自身属性 交给子类重写 super自动调用该方法 注意调用super
+    open func initializeProperty() {
+        
+    }
+    
+    /// 构造函数初始化时调用 注意调用super
+    open func initialization() {
+        
+        initializeProperty()
+        createUI()
+        layoutUI()
+        initializeUIData()
+    }
+    
+    /// 创建UI 交给子类重写 super自动调用该方法 注意调用super
+    open func createUI() {
+        
+    }
+    
+    /// 布局UI 交给子类重写 super自动调用该方法 注意调用super
+    open func layoutUI() {
+        
+    }
+    
+    /// 初始化UI数据 交给子类重写 super自动调用该方法 注意调用super
+    open func initializeUIData() {
+        
+    }
+    
     // MARK:
     // MARK: - Private Property
     
-    private var selectIconNormalBackgroundColor: UIColor {
-        
-        UIColor.black.withAlphaComponent(0.1)
-    }
+    
 }

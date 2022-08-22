@@ -36,6 +36,7 @@ open class JKPHPickerView: JKPHPickerBaseView {
     open weak var delegate: JKPHPickerViewDelegate?
     
     open private(set) var selectedPhotoItemArray = [JKPHPickerPhotoItem]()
+    open private(set) var previewSelectedPhotoItemArray = [JKPHPickerPhotoItem]()
     
     open weak var browserView: JKPHPickerBrowserView? {
         
@@ -580,6 +581,8 @@ open class JKPHPickerView: JKPHPickerBaseView {
         
         guard let firstItem = selectedPhotoItemArray.first else { return }
         
+        previewSelectedPhotoItemArray = selectedPhotoItemArray
+        
         delegate?.pickerView(self, didSelect: firstItem)
     }
     
@@ -817,7 +820,7 @@ open class JKPHPickerView: JKPHPickerBaseView {
     
     private var previewArrray: [JKPHPickerPhotoItem] {
         
-        isPreviewSelected ? selectedPhotoItemArray : photoItemDataArray
+        isPreviewSelected ? previewSelectedPhotoItemArray : photoItemDataArray
     }
     
     private var nextSelectTypes: JKPHPickerPickType?
@@ -1597,6 +1600,8 @@ extension JKPHPickerView: JKPHPickerBrowserViewDataSource, JKPHPickerBrowserView
     
     /// 即将退出
     open func browserViewWillDismiss(_ browserView: JKPHPickerBrowserView) {
+        
+        previewSelectedPhotoItemArray.removeAll()
         
         let cancelItemArray = previewArrray
         

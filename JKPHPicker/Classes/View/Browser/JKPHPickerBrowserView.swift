@@ -115,8 +115,6 @@ open class JKPHPickerBrowserView: JKPHPickerBaseView {
                   return
               }
         
-        currentIndex = indexPath.item
-        
         self.dataSource = realDataSource
         self.delegate = delegate
         
@@ -125,6 +123,8 @@ open class JKPHPickerBrowserView: JKPHPickerBaseView {
         self.alpha = 0.0
         self.isHidden = false
         
+        photoItem.isCurrent = true
+        
         currentPhotoItem = photoItem
         
         self.collectionView.isHidden = true
@@ -132,6 +132,16 @@ open class JKPHPickerBrowserView: JKPHPickerBaseView {
         
         self.setNeedsLayout()
         self.layoutIfNeeded()
+        
+        currentIndex = indexPath.item
+        
+        if realDataSource.isPreviewSelectedItems(in: self) {
+            
+            addSubview(previewView)
+            
+            self.previewView.dataSource = realDataSource
+            self.previewView.updateCurrentIndex(currentIndex, animated: false)
+        }
         
         if currentIndex > 0 {
             
@@ -243,6 +253,13 @@ open class JKPHPickerBrowserView: JKPHPickerBaseView {
     
     private func updateLayout() {
         
+        if let dataSource = dataSource,
+           dataSource.isPreviewSelectedItems(in: self) {
+            
+            let previewHeight = JKPHPickerPreviewView.defaultHeight
+            previewView.frame = CGRect(x: 0.0, y: bottomControlView.frame.minY - previewHeight, width: bounds.width, height: previewHeight)
+        }
+        
         collectionView.frame = CGRect(x: -JKPHPickerUtility.browserInset.left, y: 0.0, width: contentView.bounds.width + JKPHPickerUtility.browserInset.left + JKPHPickerUtility.browserInset.right, height: contentView.bounds.height)
         
         flowLayout.itemSize = collectionView.bounds.size
@@ -321,6 +338,65 @@ open class JKPHPickerBrowserView: JKPHPickerBaseView {
         let imageName = isSelected ? "select_on" : "select_off"
         
         selectIconImageView.image = JKPHPickerResourceManager.image(named: imageName)
+        
+        guard let currentPhotoItem = currentPhotoItem else { return }
+        
+        currentPhotoItem.reloadInPreview(isRequestImage: false)
+    }
+    
+    open override func showBottomControl(_ animated: Bool) {
+        super.showBottomControl(animated)
+        
+        guard let dataSource = dataSource,
+              dataSource.isPreviewSelectedItems(in: self) else {
+            
+            return
+        }
+        
+        if !animated {
+            
+            previewView.isHidden = false
+            
+            return
+        }
+        
+        previewView.alpha = 0.0
+        previewView.isHidden = false
+        
+        UIView.transition(with: bottomControlView, duration: 0.25, options: .transitionCrossDissolve) {
+            
+            self.previewView.alpha = 1.0
+            
+        } completion: { _ in
+            
+        }
+    }
+    
+    open override func hideBottomControl(_ animated: Bool) {
+        super.hideBottomControl(animated)
+        
+        guard let dataSource = dataSource,
+              dataSource.isPreviewSelectedItems(in: self) else {
+            
+            return
+        }
+        
+        if !animated {
+            
+            previewView.isHidden = true
+            
+            return
+        }
+        
+        UIView.transition(with: bottomControlView, duration: 0.25, options: .transitionCrossDissolve) {
+            
+            self.previewView.alpha = 0.0
+            
+        } completion: { _ in
+            
+            self.previewView.isHidden = true
+            self.previewView.alpha = 1.0
+        }
     }
     
     // MARK:
@@ -667,6 +743,15 @@ open class JKPHPickerBrowserView: JKPHPickerBaseView {
         return button
     }()
     
+    private lazy var previewView: JKPHPickerPreviewView = {
+        
+        let previewView = JKPHPickerPreviewView(frame: CGRect(x: 0.0, y: 0.0, width: JKScreenWidth, height: JKPHPickerPreviewView.defaultHeight), configuration: self.configuration)
+        
+        previewView.browserView = self
+        
+        return previewView
+    }()
+    
     private var previousOrientationIndex: Int?
     
     private var isControlHidden: Bool = false
@@ -755,11 +840,19 @@ extension JKPHPickerBrowserView {
             
             guard let _ = self else { return }
             
-            let animateHandler: (() -> Void) = {
+            let animateHandler: (() -> Void) = { [weak self] in
+                
+                guard let _ = self else { return }
                 
                 self?.backgroundView.alpha = slideAlpha
                 self?.navigationBarView.alpha = slideAlpha
                 self?.bottomControlView.alpha = slideAlpha
+                
+                if let dataSource = self?.dataSource,
+                   dataSource.isPreviewSelectedItems(in: self!) {
+                    
+                    self?.previewView.alpha = slideAlpha
+                }
             }
             
             if animated {
@@ -843,6 +936,11 @@ extension JKPHPickerBrowserView {
 extension JKPHPickerBrowserView {
     
     private func preDismiss() {
+        
+        if let currentPhotoItem = currentPhotoItem {
+            
+            currentPhotoItem.isCurrent = false
+        }
         
         if let delegate = delegate {
             
@@ -1018,14 +1116,29 @@ extension JKPHPickerBrowserView {
         
         guard index >= 0,
               photoItemArray.count > index else {
-                  
-                  // TODO: - JKTODO <#注释#>
-                  
-                  return
-              }
+            
+            // TODO: - JKTODO <#注释#>
+            
+            return
+        }
+        
+        if let _ = currentPhotoItem {
+            
+            currentPhotoItem?.isCurrent = false
+            currentPhotoItem?.reloadInPreview(isRequestImage: false)
+        }
         
         currentIndex = index
         currentPhotoItem = photoItemArray[currentIndex]
+        
+        currentPhotoItem?.isCurrent = true
+        currentPhotoItem?.reloadInPreview(isRequestImage: false)
+        
+        if let dataSource = dataSource,
+           dataSource.isPreviewSelectedItems(in: self) {
+            
+            self.previewView.updateCurrentIndex(currentIndex, animated: true)
+        }
     }
 }
 

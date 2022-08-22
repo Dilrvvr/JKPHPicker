@@ -173,18 +173,6 @@ open class JKPHPickerBrowserCell: JKPHPickerBaseCollectionViewCell {
     // MARK:
     // MARK: - Override
     
-    public override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        initialization()
-    }
-    
-    public required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        
-        initialization()
-    }
-    
     open override func layoutSubviews() {
         super.layoutSubviews()
         
@@ -810,17 +798,14 @@ open class JKPHPickerBrowserCell: JKPHPickerBaseCollectionViewCell {
     // MARK: - Initialization & Build UI
     
     /// 初始化自身属性 交给子类重写 super自动调用该方法
-    open func initializeProperty() {
+    open override func initializeProperty() {
+        super.initializeProperty()
         
     }
     
     /// 构造函数初始化时调用 注意调用super
-    open func initialization() {
-        
-        initializeProperty()
-        createUI()
-        layoutUI()
-        initializeUIData()
+    open override func initialization() {
+        super.initialization()
         
         singleTapGesture.require(toFail: doubleTapGesture)
         
@@ -830,7 +815,8 @@ open class JKPHPickerBrowserCell: JKPHPickerBaseCollectionViewCell {
     }
     
     /// 创建UI 交给子类重写 super自动调用该方法
-    open func createUI() {
+    open override func createUI() {
+        super.createUI()
         
         contentView.insertSubview(mainContainerView, at: 0)
         contentView.addSubview(videoPlayButton)
@@ -847,12 +833,14 @@ open class JKPHPickerBrowserCell: JKPHPickerBaseCollectionViewCell {
     }
     
     /// 布局UI 交给子类重写 super自动调用该方法
-    open func layoutUI() {
+    open override func layoutUI() {
+        super.layoutUI()
         
     }
     
     /// 初始化UI数据 交给子类重写 super自动调用该方法
-    open func initializeUIData() {
+    open override func initializeUIData() {
+        super.initializeUIData()
         
     }
     

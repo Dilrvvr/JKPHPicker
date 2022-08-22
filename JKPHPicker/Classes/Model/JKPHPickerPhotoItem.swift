@@ -51,6 +51,8 @@ open class JKPHPickerPhotoItem: NSObject {
     // MARK:
     // MARK: - Public Property
     
+    open var isCurrent = false
+    
     /// 浏览时加载失败的错误信息
     open var browserErrorMessage: String?
     
@@ -77,6 +79,9 @@ open class JKPHPickerPhotoItem: NSObject {
     
     /// browser中刷新回调
     open var reloadBrowserHandler: ((_ photoItem: JKPHPickerPhotoItem, _ isRequestImage: Bool) -> Void)?
+    
+    /// preview中刷新回调
+    open var reloadPreviewHandler: ((_ photoItem: JKPHPickerPhotoItem, _ isRequestImage: Bool) -> Void)?
     
     /// 预览图加载完成回调
     open var didLoadPreviewImageHandler: ((_ image: UIImage?) -> Void)?
@@ -246,6 +251,15 @@ open class JKPHPickerPhotoItem: NSObject {
     open func reloadInBrowser(isRequestImage: Bool) {
         
         if let handler = reloadBrowserHandler {
+            
+            handler(self, isRequestImage)
+        }
+    }
+    
+    /// 在browser中刷新
+    open func reloadInPreview(isRequestImage: Bool) {
+        
+        if let handler = reloadPreviewHandler {
             
             handler(self, isRequestImage)
         }
