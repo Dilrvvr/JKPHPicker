@@ -333,15 +333,22 @@ open class JKPHPickerBrowserView: JKPHPickerBaseView {
         navigationBarView.attributedTitle = attrM
     }
     
-    private func updateSelectIcon(isSelected: Bool) {
+    private func updateSelectIcon(photoItem: JKPHPickerPhotoItem?) {
         
-        let imageName = isSelected ? "select_on" : "select_off"
+        guard let photoItem = photoItem else {
+            
+            selectIconLabel.text = nil
+            selectIconLabel.layer.backgroundColor = nil
+            selectIconLabel.layer.borderColor = UIColor.white.cgColor
+            
+            return
+        }
         
-        selectIconImageView.image = JKPHPickerResourceManager.image(named: imageName)
+        selectIconLabel.text = photoItem.isSelected ? "\(photoItem.selectIndex + 1)" : nil
+        selectIconLabel.layer.backgroundColor = photoItem.isSelected ? UIColor.systemBlue.cgColor : nil
+        selectIconLabel.layer.borderColor = photoItem.isSelected ? UIColor.clear.cgColor : UIColor.white.cgColor
         
-        guard let currentPhotoItem = currentPhotoItem else { return }
-        
-        currentPhotoItem.reloadInPreview(isRequestImage: false)
+        photoItem.reloadInPreview(isRequestImage: false)
     }
     
     open override func showBottomControl(_ animated: Bool) {
@@ -545,32 +552,32 @@ open class JKPHPickerBrowserView: JKPHPickerBaseView {
         
         super.originalImageButtonClick(button: button)
         
-        guard let _ = currentPhotoItem else { return }
+        guard let currentPhotoItem = currentPhotoItem else { return }
         
-        if let _ = delegate {
+        if let delegate = delegate {
             
-            delegate!.browserView(self, didTapOriginalImageButton: button, photoItem: currentPhotoItem!)
+            delegate.browserView(self, didTapOriginalImageButton: button, photoItem: currentPhotoItem)
         }
         
-        if let _ = dataSource {
+        if let dataSource = dataSource {
             
-            originalImageButton.isSelected = dataSource!.browserViewShouldSelectOriginalImageOn(self)
+            originalImageButton.isSelected = dataSource.browserViewShouldSelectOriginalImageOn(self)
         }
         
-        updateSelectIcon(isSelected: currentPhotoItem!.isSelected)
+        updateSelectIcon(photoItem: currentPhotoItem)
     }
     
     /// 点击选中按钮
     @objc open func selectButtonClick(button: UIButton) {
         
-        guard let _ = currentPhotoItem else { return }
+        guard let currentPhotoItem = currentPhotoItem else { return }
         
-        if let _ = delegate {
+        if let delegate = delegate {
             
-            delegate!.browserView(self, didTapSelectButton: button, photoItem: currentPhotoItem!)
+            delegate.browserView(self, didTapSelectButton: button, photoItem: currentPhotoItem)
         }
         
-        updateSelectIcon(isSelected: currentPhotoItem!.isSelected)
+        updateSelectIcon(photoItem: currentPhotoItem)
     }
     
     // MARK:
@@ -600,7 +607,7 @@ open class JKPHPickerBrowserView: JKPHPickerBaseView {
         contentView.insertSubview(collectionView, at: 0)
         
         navigationBarView.contentView.addSubview(selectButton)
-        navigationBarView.contentView.addSubview(selectIconImageView)
+        navigationBarView.contentView.addSubview(selectIconLabel)
         
         bottomControlView.contentView.addSubview(editButton)
     }
@@ -615,10 +622,10 @@ open class JKPHPickerBrowserView: JKPHPickerBaseView {
             
             let barContentView = barView.contentView
             
-            self?.selectIconImageView.frame = CGRect(x: barContentView.bounds.width - 15.0 - Self.selectIconWH, y: (barContentView.bounds.height - Self.selectIconWH) * 0.5, width: Self.selectIconWH, height: Self.selectIconWH)
+            self?.selectIconLabel.frame = CGRect(x: barContentView.bounds.width - 15.0 - Self.selectIconWH, y: (barContentView.bounds.height - Self.selectIconWH) * 0.5, width: Self.selectIconWH, height: Self.selectIconWH)
             
             self?.selectButton.frame = CGRect(x: 0.0, y: 0.0, width: Self.selectIconWH + 30.0, height: barContentView.bounds.height)
-            self?.selectButton.center = self!.selectIconImageView.center
+            self?.selectButton.center = self!.selectIconLabel.center
         }
     }
     
@@ -684,9 +691,9 @@ open class JKPHPickerBrowserView: JKPHPickerBaseView {
                 selectButton.isHidden = true
             }
             
-            selectIconImageView.alpha = selectButton.isHidden ? 0.1 : 1.0
+            selectIconLabel.alpha = selectButton.isHidden ? 0.1 : 1.0
             
-            updateSelectIcon(isSelected: newValue?.isSelected ?? false)
+            updateSelectIcon(photoItem: newValue)
         }
         
         didSet {
@@ -721,17 +728,21 @@ open class JKPHPickerBrowserView: JKPHPickerBaseView {
         return editButton
     }()
     
-    /// selectIconImageView
-    private lazy var selectIconImageView: UIImageView = {
+    /// selectIconLabel
+    open private(set) lazy var selectIconLabel: UILabel = {
         
-        let imageView = UIImageView()
+        let label = UILabel()
         
-        imageView.contentMode = .scaleAspectFill
-        imageView.image = JKPHPickerResourceManager.image(named: "select_off")
+        label.font = UIFont.systemFont(ofSize: 11.0)
+        label.textColor = .white
+        label.textAlignment = .center
+        label.adjustsFontSizeToFitWidth = true
         
-        imageView.layer.cornerRadius = Self.selectIconWH * 0.5
+        label.layer.cornerRadius = Self.selectIconWH * 0.5
+        label.layer.borderWidth = 1.0
+        label.layer.borderColor = UIColor.white.cgColor
         
-        return imageView
+        return label
     }()
     
     private lazy var selectButton: UIButton = {
