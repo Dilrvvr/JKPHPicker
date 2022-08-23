@@ -22,6 +22,8 @@ class JKPHPickerPreviewView: JKPHPickerBaseBarView {
     
     open weak var browserView: JKPHPickerBrowserView?
     
+    open var didSelectItemHandler: ((_ photoItem: JKPHPickerPhotoItem, _ indexPath: IndexPath) -> Void)?
+    
     // MARK:
     // MARK: - Public Methods
     
@@ -215,7 +217,16 @@ extension JKPHPickerPreviewView: UICollectionViewDataSource, UICollectionViewDel
     
     open func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        // TODO: - JKTODO <#注释#>
+        guard let dataSource = dataSource,
+              let browserView = browserView,
+              let photoItem = dataSource.browserView(browserView, photoItemAt: indexPath) else {
+            
+            return
+        }
         
+        if let handler = didSelectItemHandler {
+            
+            handler(photoItem, indexPath)
+        }
     }
 }

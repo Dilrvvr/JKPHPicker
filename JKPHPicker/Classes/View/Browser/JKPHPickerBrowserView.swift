@@ -749,8 +749,37 @@ open class JKPHPickerBrowserView: JKPHPickerBaseView {
         
         previewView.browserView = self
         
+        previewView.didSelectItemHandler = { [weak self] photoItem, indexPath in
+            
+            guard let _ = self else { return }
+            
+            self?.solvePreviewDidSelectItem(photoItem: photoItem, indexPath: indexPath)
+        }
+        
         return previewView
     }()
+    
+    private func solvePreviewDidSelectItem(photoItem: JKPHPickerPhotoItem,
+                                           indexPath: IndexPath) {
+        
+        if photoItem.isCurrent { return }
+        
+        photoItem.isCurrent = true
+        photoItem.reloadInPreview(isRequestImage: false)
+        
+        if let _ = currentPhotoItem {
+            
+            currentPhotoItem?.isCurrent = false
+            currentPhotoItem?.reloadInPreview(isRequestImage: false)
+        }
+        
+        currentPhotoItem = photoItem
+        currentIndex = indexPath.item
+        
+        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        
+        self.previewView.updateCurrentIndex(currentIndex, animated: true)
+    }
     
     private var previousOrientationIndex: Int?
     
