@@ -119,7 +119,6 @@ open class JKPHPickerBaseCell: JKPHPickerBaseCollectionViewCell {
     open override func initializeUIData() {
         super.initializeUIData()
         
-        //self.makeShadow(view: selectIconLabel)
     }
     
     // MARK:
@@ -170,8 +169,6 @@ open class JKPHPickerBaseCell: JKPHPickerBaseCollectionViewCell {
         
         button.setBackgroundImage(image, for: .normal)
         
-        self.makeShadow(view: button)
-        
         return button
     }()
     
@@ -187,12 +184,20 @@ open class JKPHPickerBaseCell: JKPHPickerBaseCollectionViewCell {
         button.contentHorizontalAlignment = .left
         button.imageView?.contentMode = .scaleAspectFit
         button.contentEdgeInsets = .zero
-        button.titleLabel?.font = self.mediaTypeFont
-        button.titleLabel?.adjustsFontSizeToFitWidth = true
-        
-        self.makeShadow(view: button)
         
         return button
+    }()
+    
+    open private(set) lazy var mediaTypeLabel: UILabel = {
+        
+        let label = UILabel()
+        
+        label.adjustsFontSizeToFitWidth = true
+        label.font = self.mediaTypeFont
+        label.textColor = .white
+        label.textAlignment = .center
+        
+        return label
     }()
     
     /// 收藏的图标
@@ -223,8 +228,6 @@ open class JKPHPickerBaseCell: JKPHPickerBaseCollectionViewCell {
         
         button.setBackgroundImage(image, for: .normal)
         
-        self.makeShadow(view: button)
-        
         return button
     }()
     
@@ -237,21 +240,11 @@ open class JKPHPickerBaseCell: JKPHPickerBaseCollectionViewCell {
         label.textColor = .white
         label.textAlignment = .right
         
-        self.makeShadow(view: label)
-        
         return label
     }()
     
     open var shadowColor: CGColor {
         
-        UIColor.black.withAlphaComponent(0.4).cgColor
-    }
-    
-    open func makeShadow(view: UIView) {
-        
-        view.layer.shadowColor = self.shadowColor
-        view.layer.shadowOffset = .zero
-        view.layer.shadowOpacity = 1.0
-        view.layer.shadowRadius = 1.0
+        UIColor.black.withAlphaComponent(0.2).cgColor
     }
 }
