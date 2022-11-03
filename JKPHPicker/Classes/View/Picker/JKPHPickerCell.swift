@@ -130,7 +130,9 @@ open class JKPHPickerCell: JKPHPickerBaseCell {
         mediaTypeButton.frame.size.height = iconMaxWH
         mediaTypeButton.frame.size.width = JKGetScaleWidth(currentHeight: mediaTypeButton.frame.size.height, scaleWidth: previousSize.width, scaleHeight: previousSize.height)
         
-        if mediaTypeButton.frame.size.width > iconMaxWH {
+        if let photoItem = model,
+           let _ = photoItem.mediaTypeImageName,
+           mediaTypeButton.frame.size.width > iconMaxWH {
             
             mediaTypeButton.frame.size.width = iconMaxWH
             mediaTypeButton.frame.size.height = JKGetScaleHeight(currentWidth: mediaTypeButton.frame.size.width, scaleWidth: previousSize.width, scaleHeight: previousSize.height)

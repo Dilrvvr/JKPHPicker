@@ -339,6 +339,10 @@ open class JKPHPickerPhotoItem: NSObject {
                 
                 mediaType = .gif
                 mediaTypeDisplayName = "GIF"
+                
+            } else if suffix == "dng" {
+                
+                mediaTypeDisplayName = "RAW"
             }
         }
     }

@@ -188,6 +188,7 @@ open class JKPHPickerBaseCell: JKPHPickerBaseCollectionViewCell {
         button.imageView?.contentMode = .scaleAspectFit
         button.contentEdgeInsets = .zero
         button.titleLabel?.font = self.mediaTypeFont
+        button.titleLabel?.adjustsFontSizeToFitWidth = true
         
         self.makeShadow(view: button)
         
