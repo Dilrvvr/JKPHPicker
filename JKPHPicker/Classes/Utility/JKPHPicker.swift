@@ -47,6 +47,7 @@ public protocol JKPHPickerResultProtocol {
 
 public struct JKPHPicker {
     
+    /*
     public static func show(withConfiguration configuration: JKPHPickerConfiguration?) -> JKPHPicker {
         
         let config = (configuration == nil) ? JKPHPickerConfiguration() : configuration!
@@ -55,6 +56,7 @@ public struct JKPHPicker {
         
         return picker
     }
+     // */
     
     /// 使用控制器
     public static func show(with configuration: JKPHPickerConfiguration,

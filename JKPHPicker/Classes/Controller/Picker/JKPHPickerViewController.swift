@@ -29,8 +29,6 @@ open class JKPHPickerViewController: JKPHPickerBaseViewController {
                 handler(nav)
             }
         }
-        
-        // TODO: - JKTODO Warning: Attempt to present <JKSwiftPhotoPicker.JKPHPickerNavigationController: 0x10509d600> on <JKSwiftPhotoPicker.ViewController: 0x10600bcf0> whose view is not in the window hierarchy!
     }
     
     // MARK:

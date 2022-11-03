@@ -38,14 +38,6 @@ open class JKPHPickerUIView: UIView {
     // MARK:
     // MARK: - Override
     
-    deinit {
-        
-        // TODO: - JKTODO <#注释#>
-        //let printDate = Date().addingTimeInterval(TimeInterval(NSTimeZone.system.secondsFromGMT()))
-        //let fileName = "\(#file)".components(separatedBy: "/").last ?? "未知"
-        //print("\(printDate) \(fileName) (Line: \(#line)) \(String(describing: Self.self)).\(#function)")
-    }
-    
     public override init(frame: CGRect) {
         super.init(frame: frame)
         
