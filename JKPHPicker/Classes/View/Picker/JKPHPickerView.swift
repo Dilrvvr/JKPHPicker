@@ -1090,22 +1090,28 @@ extension JKPHPickerView: UICollectionViewDelegateFlowLayout {
         return itemSize
     }
     
+    open func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        
+        guard photoItemDataArray.count > indexPath.item,
+              cell is JKPHPickerCell else {
+            
+            return
+        }
+        
+        let realCell = (cell as! JKPHPickerCell)
+        
+        realCell.configuration = configuration
+        realCell.thumbnailImageCache = configuration.thumbnailImageCache
+        realCell.model = photoItemDataArray[indexPath.item]
+        
+        solveCellHandler(realCell)
+    }
+    
     open override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         if photoItemDataArray.count > indexPath.item {
             
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: JKPHPickerCell.self), for: indexPath)
-            
-            if (cell is JKPHPickerCell) {
-                
-                let realCell = cell as! JKPHPickerCell
-                
-                realCell.configuration = configuration
-                realCell.thumbnailImageCache = configuration.thumbnailImageCache
-                realCell.model = photoItemDataArray[indexPath.item]
-                
-                solveCellHandler(realCell)
-            }
             
             return cell
         }
