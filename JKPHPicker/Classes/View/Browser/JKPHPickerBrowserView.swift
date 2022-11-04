@@ -120,8 +120,8 @@ open class JKPHPickerBrowserView: JKPHPickerBaseView {
         
         self.originalImageButton.isSelected = realDataSource.browserViewShouldSelectOriginalImageOn(self)
         
-        self.alpha = 0.0
-        self.isHidden = false
+        //self.alpha = 0.0
+        //self.isHidden = false
         
         photoItem.isCurrent = true
         
@@ -181,10 +181,17 @@ open class JKPHPickerBrowserView: JKPHPickerBaseView {
             } completion: { _ in }
         }
         
+        self.backgroundView.alpha = 0.0
+        self.navigationBarView.alpha = 0.0
+        self.bottomControlView.alpha = 0.0
+        self.isHidden = false
+        
         UIView.animate(withDuration: 0.45, delay: 0.0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.0, options: .curveEaseOut) {
             
             imageView.frame = targetFrame
-            self.alpha = 1.0
+            self.backgroundView.alpha = 1.0
+            self.navigationBarView.alpha = 1.0
+            self.bottomControlView.alpha = 1.0
             
         } completion: { _ in
             
