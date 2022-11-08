@@ -38,7 +38,7 @@ Pod::Spec.new do |s|
   
   s.framework  = "UIKit", "Foundation"
   
-  s.dependency 'JKSwiftLibrary', '1.0.2'
+  s.dependency 'JKSwiftLibrary', '1.0.3'
   
   s.swift_version = '5.0'
 end
