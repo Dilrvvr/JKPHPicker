@@ -256,8 +256,8 @@ extension JKPHPickerViewController: JKPHPickerBrowserViewActionDelegate {
     
     open func browserView(_ browserView: JKPHPickerBrowserView, playVideo playerItem: AVPlayerItem, photoItem: JKPHPickerPhotoItem) {
         
-        try? AVAudioSession.sharedInstance().setActive(true)
         try? AVAudioSession.sharedInstance().setCategory(.playback)
+        try? AVAudioSession.sharedInstance().setActive(true)
         
         let vc = AVPlayerViewController()
         vc.allowsPictureInPicturePlayback = false
