@@ -131,6 +131,9 @@ open class JKPHPickerBaseViewController: UIViewController {
     
     open func checkViewOrientationDidChange() {
         
+        // TODO: - JKTODO <#注释#>
+        return;
+        
         if __CGSizeEqualToSize(previousViewSize, view.bounds.size) {
             
             return
@@ -174,6 +177,13 @@ open class JKPHPickerBaseViewController: UIViewController {
         isOrientationWillChange = true
 
         viewOrientationWillChange()
+        
+        coordinator.animate { [weak self] context in
+            
+            guard let _ = self else { return }
+            
+            self?.viewOrientationDidChange()
+        }
     }
      // */
     

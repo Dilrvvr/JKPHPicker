@@ -133,12 +133,12 @@ public struct JKPHPickerUtility {
     static var pickerColumnCount: Int {
         
         if JKisDeviceiPhone {
-            
+
             return JKisLandscape ? 6 : 4
         }
-        
+
         let columnCount = Int(floor(JKKeyWindow.bounds.width / 100.0))
-        
+
         return columnCount
     }
 }

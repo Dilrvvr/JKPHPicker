@@ -74,18 +74,33 @@ open class JKPHPickerView: JKPHPickerBaseView {
         
         if indexPath.item < 0 || indexPath.item >= photoItemDataArray.count { return }
         
-        setNeedsLayout()
-        layoutIfNeeded()
+        collectionView.collectionViewLayout.invalidateLayout()
         
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.15) {
+//        setNeedsLayout()
+//        layoutIfNeeded()
+//        collectionView.reloadData()
+        
+        
+        self.collectionView.performBatchUpdates { [weak self] in
             
-            self.collectionView.setNeedsLayout()
-            self.collectionView.layoutIfNeeded()
-            self.collectionView.reloadData()
+            guard let _ = self else { return }
             
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
+            self?.collectionView.reloadData()
+            
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.15) {
                 
-                self.collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: false)
+                guard let _ = self else { return }
+                
+                self?.collectionView.setNeedsLayout()
+                self?.collectionView.layoutIfNeeded()
+                //self?.collectionView.reloadData()
+                
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.1) {
+                    
+                    guard let _ = self else { return }
+                    
+                    self?.collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: false)
+                }
             }
         }
     }
