@@ -95,7 +95,14 @@ open class JKPHPickerBaseCollectionViewCell: UICollectionViewCell {
     
     open func updateSelectIcon(isSelected: Bool) {
         
-        selectIconLabel.layer.backgroundColor = isSelected ? UIColor.systemBlue.cgColor : self.selectIconNormalBackgroundColor.cgColor
+        var selectedColor = UIColor.systemBlue
+        
+        if let configuration = configuration {
+            
+            selectedColor = configuration.mainColor
+        }
+        
+        selectIconLabel.layer.backgroundColor = isSelected ? selectedColor.cgColor : self.selectIconNormalBackgroundColor.cgColor
         selectIconLabel.layer.borderColor = isSelected ? UIColor.clear.cgColor : UIColor.white.cgColor
         
         if hasSelectedCover {

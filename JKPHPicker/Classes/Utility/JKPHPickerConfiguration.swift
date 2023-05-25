@@ -119,6 +119,15 @@ open class JKPHPickerConfiguration: NSObject {
     /// 完成按钮文字
     open var completeButtonTitle = "完成"
     
+    /// 主颜色
+    open var mainColor = UIColor.systemBlue {
+        
+        didSet {
+            
+            editConfiguration.mainColor = mainColor
+        }
+    }
+    
     open var editConfiguration = JKPHPickerEditConfiguration(clipRatio: .zero, isClipCircle: false)
     
     /// 缩略图缓存

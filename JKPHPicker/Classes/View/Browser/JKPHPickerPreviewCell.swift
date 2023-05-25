@@ -40,6 +40,15 @@ class JKPHPickerPreviewCell: JKPHPickerBaseCell {
         layer.borderWidth = photoItem.isCurrent ? 2.0 : 0.0
         
         nonselectableCoverView.isHidden = photoItem.isSelected
+        
+        var borderColor = UIColor.systemBlue
+        
+        if let configuration = configuration {
+            
+            borderColor = configuration.mainColor
+        }
+        
+        layer.borderColor = borderColor.cgColor
     }
     
     // MARK:
@@ -93,7 +102,6 @@ class JKPHPickerPreviewCell: JKPHPickerBaseCell {
     override func initializeUIData() {
         super.initializeUIData()
         
-        layer.borderColor = UIColor.systemBlue.cgColor
     }
     
     // MARK:

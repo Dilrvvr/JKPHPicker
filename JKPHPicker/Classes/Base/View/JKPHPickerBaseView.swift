@@ -356,7 +356,7 @@ open class JKPHPickerBaseView: JKPHPickerUIView {
         
         let completeButton = UIButton(type: .custom)
         
-        completeButton.backgroundColor = UIColor.systemBlue
+        completeButton.backgroundColor = configuration.mainColor
         completeButton.isEnabled = false
         completeButton.layer.cornerRadius = 3.0
         completeButton.titleLabel?.font = UIFont.systemFont(ofSize: 15.0)

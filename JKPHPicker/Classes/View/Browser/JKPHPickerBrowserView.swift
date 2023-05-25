@@ -352,7 +352,7 @@ open class JKPHPickerBrowserView: JKPHPickerBaseView {
         }
         
         selectIconLabel.text = photoItem.isSelected ? "\(photoItem.selectIndex + 1)" : nil
-        selectIconLabel.layer.backgroundColor = photoItem.isSelected ? UIColor.systemBlue.cgColor : nil
+        selectIconLabel.layer.backgroundColor = photoItem.isSelected ? configuration.mainColor.cgColor : nil
         selectIconLabel.layer.borderColor = photoItem.isSelected ? UIColor.clear.cgColor : UIColor.white.cgColor
         
         photoItem.reloadInPreview(isRequestImage: false)

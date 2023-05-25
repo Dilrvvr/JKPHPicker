@@ -1530,7 +1530,7 @@ open class JKPHPickerEditView: JKPHPickerUIView {
     private func updateCustomRatioItemButtonStatus(_ button: UIButton, isSelected: Bool) {
         
         button.isSelected = isSelected
-        button.layer.borderColor = (button.isSelected ? UIColor.systemBlue : UIColor.white).cgColor
+        button.layer.borderColor = (button.isSelected ? configuration.mainColor : UIColor.white).cgColor
     }
     
     /// 反转自定义比例
@@ -2222,7 +2222,7 @@ open class JKPHPickerEditView: JKPHPickerUIView {
         let button = UIButton(type: .custom)
         
         let normalTitleColor = UIColor.white
-        let selectedTitleColor = UIColor.systemBlue
+        let selectedTitleColor = configuration.mainColor
         
         button.titleLabel?.font = UIFont.systemFont(ofSize: 11.0)
         

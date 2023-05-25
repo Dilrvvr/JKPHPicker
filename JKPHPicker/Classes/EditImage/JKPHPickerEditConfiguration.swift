@@ -9,6 +9,9 @@ import UIKit
 
 open class JKPHPickerEditConfiguration: NSObject {
     
+    /// 主颜色
+    open var mainColor = UIColor.systemBlue
+    
     /// clipRatio: 裁剪比例 x/y任意一项小于等于0则表示自由裁剪 默认.zert
     /// isClipCircle: 是否裁剪圆形 默认false  赋值true则clipRatio强制改为CGPoint(x: 1.0, y: 1.0)
     public required init(clipRatio: CGPoint = .zero, isClipCircle: Bool = false) {
